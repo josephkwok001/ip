@@ -34,12 +34,14 @@ public class Leroy {
             if (user_expression.startsWith("mark ")) {
                 int taskNumber = Integer.parseInt(user_expression.substring(5));
                 list.get(taskNumber - 1).markAsDone();
+                System.out.println("Nice! I've marked this task as done:\n" + list.get(taskNumber - 1)hi);
                 System.out.println("═╦══════════════════════════════════════════════════════════╦═");
                 continue;
             }
             if (user_expression.startsWith("unmark ")) {
                 int taskNumber = Integer.parseInt(user_expression.substring(7));
                 list.get(taskNumber - 1).unmark();
+                System.out.println("OK, I've marked this task as not done yet:\n");
                 System.out.println("═╦══════════════════════════════════════════════════════════╦═");
                 continue;
             }
