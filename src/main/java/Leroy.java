@@ -93,29 +93,43 @@ public class Leroy {
                     continue;
                 }
 
+                if(user_expression.startsWith("delete ")){
+                    int index = Integer.parseInt(user_expression.substring(7));
+
+                    if (index < 1 || index > list.size()) {
+                        throw new LeroyException("INVALID TASK NUMBER!");
+                    }
+
+                    System.out.println("Noted. I've removed this task:\n");
+                    System.out.println(list.get(index - 1));
+                    list.remove(index - 1);
+                    System.out.println("Now you have " + list.size() +" tasks in the list.");
+                    continue;
+                }
+
+
                 if (user_expression.equals("todo")) {
                     throw new LeroyException("SOLDIER! A todo needs a description. Usage: todo [task]");
                 } else if (user_expression.equals("deadline")) {
                     throw new LeroyException("SOLDIER! A deadline needs details. Usage: deadline [task] /by [time]");
                 } else if (user_expression.equals("event")) {
                     throw new LeroyException("SOLDIER! An event needs details. Usage: event [task] /from [start] /to [end]");
+                } else if (user_expression.equals("delete")){
+                    throw new LeroyException("SOLDIER! You have not specified which event that needs to be deleted");
                 } else {
                     throw new LeroyException("COMMAND NOT RECOGNIZED! Available commands: todo, deadline, event, list, mark, unmark, bye");
                 }
             } catch (LeroyException e) {
-                printErrorMessage(e.getMessage());
+                System.out.println("____________________________________________________________");
+                System.out.println("⚠️  " + e.getMessage());
+                System.out.println("____________________________________________________________");
             } catch (Exception e) {
-                printErrorMessage("UNEXPECTED ERROR! " + e.getMessage());
+                System.out.println("____________________________________________________________");
+                System.out.println("⚠️  Unexpected Error" + e.getMessage());
+                System.out.println("____________________________________________________________");
             }
         }
 
-
-    }
-
-    private static void printErrorMessage(String message) {
-        System.out.println("____________________________________________________________");
-        System.out.println("⚠️  " + message);
-        System.out.println("____________________________________________________________");
     }
 
     static class LeroyException extends Exception {
