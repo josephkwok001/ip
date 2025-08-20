@@ -9,10 +9,11 @@ public class Leroy {
         System.out.println("═╦══════════════════════════════════════════════════════════╦═");
 
         Scanner input = new Scanner(System.in);
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Task> list = new ArrayList<>();
 
         while (true) {
             String user_expression = input.nextLine();
+            Task task = new Task(user_expression, false);
 
             if (user_expression.equals("bye")) {
                 System.out.println("═╦══════════════════════════════════════════════════════════╦═");
@@ -30,10 +31,24 @@ public class Leroy {
                 continue;
             }
 
+            if (user_expression.startsWith("mark ")) {
+                int taskNumber = Integer.parseInt(user_expression.substring(5));
+                list.get(taskNumber - 1).markAsDone();
+                System.out.println("═╦══════════════════════════════════════════════════════════╦═");
+                continue;
+            }
+            if (user_expression.startsWith("unmark ")) {
+                int taskNumber = Integer.parseInt(user_expression.substring(7));
+                list.get(taskNumber - 1).unmark();
+                System.out.println("═╦══════════════════════════════════════════════════════════╦═");
+                continue;
+            }
+
+
             System.out.println("═╦══════════════════════════════════════════════════════════╦═");
             System.out.println("📢 RECEIVED: " + user_expression);
             System.out.println("═╦══════════════════════════════════════════════════════════╦═");
-            list.add(user_expression);
+            list.add(task);
         }
     }
 }
