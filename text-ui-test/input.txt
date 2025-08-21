@@ -1,0 +1,10 @@
+todo Buy groceries
+todo Read book
+deadline Submit report /by 2024-12-25
+event Team meeting /from Mon 2pm /to 3pm
+list
+mark 1
+mark 3
+list
+unmark 1
+bye

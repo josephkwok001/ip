@@ -1,7 +1,50 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+═╦══════════════════════════════════════════════════════════╦═
+HEY SOLDIER! I'm LEROY - READY FOR ACTION!
+ What can I do for you today?
+═╦══════════════════════════════════════════════════════════╦═
+Got it. I've added this task:
+[T][ ] Buy groceries
+Now you have 1 tasks in the list.
 
+═╦══════════════════════════════════════════════════════════╦═
+Got it. I've added this task:
+[T][ ] Read book
+Now you have 2 tasks in the list.
+
+═╦══════════════════════════════════════════════════════════╦═
+Got it. I've added this task:
+[D][ ] Submit report (by: 2024-12-25)
+Now you have 3 tasks in the list.
+
+═╦══════════════════════════════════════════════════════════╦═
+Got it. I've added this task:
+[E][ ] Team meeting (from: Mon 2pm to: 3pm)
+Now you have 4 tasks in the list.
+
+═╦══════════════════════════════════════════════════════════╦═
+═╦══════════════════════════════════════════════════════════╦═
+YOUR LIST:
+1. [T][ ] Buy groceries
+2. [T][ ] Read book
+3. [D][ ] Submit report (by: 2024-12-25)
+4. [E][ ] Team meeting (from: Mon 2pm to: 3pm)
+═╦══════════════════════════════════════════════════════════╦═
+Nice! I've marked this task as done:
+[T][X] Buy groceries
+═╦══════════════════════════════════════════════════════════╦═
+Nice! I've marked this task as done:
+[D][X] Submit report (by: 2024-12-25)
+═╦══════════════════════════════════════════════════════════╦═
+═╦══════════════════════════════════════════════════════════╦═
+YOUR LIST:
+1. [T][X] Buy groceries
+2. [T][ ] Read book
+3. [D][X] Submit report (by: 2024-12-25)
+4. [E][ ] Team meeting (from: Mon 2pm to: 3pm)
+═╦══════════════════════════════════════════════════════════╦═
+OK, I've marked this task as not done yet:
+[T][ ] Buy groceries
+═╦══════════════════════════════════════════════════════════╦═
+═╦══════════════════════════════════════════════════════════╦═
+Bye. Hope to see you again soon!
+═╦══════════════════════════════════════════════════════════╦═
