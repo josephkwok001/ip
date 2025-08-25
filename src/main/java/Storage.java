@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -82,8 +84,9 @@ public class Storage {
                     if (remaining.contains("(by:")) {
                         int byIndex = remaining.indexOf("(by:");
                         String description = remaining.substring(0, byIndex).trim();
-                        String by = remaining.substring(byIndex + 4, remaining.length() - 1).trim();
+                        String time = remaining.substring(byIndex + 5, remaining.length() - 1).trim();
 
+                        LocalDateTime by = DateParser.parse(time);
                         Deadline deadline = new Deadline(description, by);
                         if (isDone) deadline.markAsDone();
                         return deadline;
@@ -95,13 +98,12 @@ public class Storage {
                         int fromIndex = remaining.indexOf("(from:");
                         String description = remaining.substring(0, fromIndex).trim();
 
-                        String timePart = remaining.substring(fromIndex + 6, remaining.length() - 1).trim();
-                        String[] timeParts = timePart.split(" to:");
+                        String time = remaining.substring(fromIndex + 6, remaining.length() - 1).trim();
+                        String[] timeParts = time.split(" to:");
 
                         if (timeParts.length >= 2) {
-                            String from = timeParts[0].trim();
-                            String to = timeParts[1].trim();
-
+                            LocalDateTime from = DateParser.parse(timeParts[0].trim());
+                            LocalDateTime to = DateParser.parse(timeParts[1].trim());
                             Event event = new Event(description, from, to);
                             if (isDone) event.markAsDone();
                             return event;

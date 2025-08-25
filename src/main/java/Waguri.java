@@ -1,5 +1,10 @@
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.MonthDay;
 
 public class Waguri {
     private static final String BORDER = "═╦══════════════════════════════════════════════════════════╦═";
@@ -16,7 +21,32 @@ public class Waguri {
         MARK,
         UNMARK,
         BYE,
+        DUE,
         UNKNOWN
+    }
+    public static void getDeadlineTasks(ArrayList<Task> tasks, String date) {
+        try {
+            for (Task t : tasks) {
+                LocalDateTime date_Parse = DateParser.parse(date);
+
+                if (t instanceof Deadline){
+                    Deadline d = (Deadline) t;
+
+                    if(d.by.toLocalDate().equals(date_Parse.toLocalDate())){
+                        System.out.println(d);
+                    }
+                }
+                if (t instanceof Event){
+                    Event e = (Event) t;
+
+                    if(e.getFrom().toLocalDate().equals(date_Parse.toLocalDate())){
+                        System.out.println(e);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     public static class CommandParser {
@@ -114,9 +144,11 @@ public class Waguri {
                     }
 
                     String description = parts[0].trim();
-                    String deadline = parts[1].trim();
-                    Deadline deadlineTask = new Deadline(description, deadline);
-                    taskList.add(deadlineTask);
+                    String time = parts[1].trim();
+                    LocalDateTime by = DateParser.parse(time);
+                    Deadline deadline_Task = new Deadline(description, by);
+
+                    taskList.add(deadline_Task);
                     storage.saveTasks(taskList);
                     System.out.println("Got it. I've added this task:\n"
                             + taskList.getLast()
@@ -140,10 +172,10 @@ public class Waguri {
                     }
 
                     String descriptionEvent = partsEvent[0].trim();
-                    String start = partsEvent[1].trim();
-                    String end = partsEvent[2].trim();
+                    LocalDateTime from = DateParser.parse(partsEvent[1].trim());
+                    LocalDateTime to = DateParser.parse(partsEvent[2].trim());
+                    Event event = new Event(descriptionEvent, from, to);
 
-                    Event event = new Event(descriptionEvent, start, end);
                     taskList.add(event);
                     storage.saveTasks(taskList);
                     System.out.println("Got it. I've added this task:\n" + taskList.getLast() + "\nNow you have " + taskList.size() + " tasks in the list.\n");
@@ -166,6 +198,10 @@ public class Waguri {
                     System.out.println("Now you have "
                             + taskList.size()
                             + " tasks in the list.");
+                    continue;
+                case DUE:
+                    String date = userExpression.substring(3).trim();
+                    getDeadlineTasks(taskList, date);
                     continue;
                 case UNKNOWN:
                     StringBuilder commands = new StringBuilder();
@@ -193,6 +229,8 @@ public class Waguri {
             }
         }
     }
+
+
 
     static class WaguriException extends Exception {
         public WaguriException(String message) {
