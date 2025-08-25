@@ -1,14 +1,27 @@
-public class Deadline extends Task {
-    String by;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.MonthDay;
 
-    public Deadline(String description, String by){
+public class Deadline extends Task {
+    LocalDateTime by;
+
+    public Deadline(String description, LocalDateTime by){
         super(description, false);
         this.by = by;
     }
 
     @Override
     public String toString(){
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        DateTimeFormatter formatter;
+
+        if (by.toLocalTime().equals(LocalTime.MIDNIGHT)) {
+            formatter = DateTimeFormatter.ofPattern("yyyy MMM dd");
+        } else {
+            formatter = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm");
+        }
+
+        return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")";
     }
 
 
