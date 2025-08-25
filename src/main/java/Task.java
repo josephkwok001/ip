@@ -17,8 +17,7 @@ public class Task {
 
     @Override
     public String toString() {
-        String bracket = this.status ? "[X] " : "[ ] ";
-        return bracket + this.description;
+        return this.status ? "[X] " : "[ ] " + this.description;
     }
 
 }
