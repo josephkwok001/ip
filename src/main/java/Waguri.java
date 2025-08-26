@@ -67,59 +67,49 @@ public class Waguri {
      */
     private boolean processCommand(Parser.Command command, String userExpression) throws WaguriException {
         switch (command) {
-            case BYE:
-                ui.showGoodbye();
-                return false;
-
-            case LIST:
-                ui.showTaskList(tasks.getTasksAsString());
-                return true;
-
-            case MARK:
-                int taskNumber = Integer.parseInt(userExpression.substring(5));
-                tasks.markTask(taskNumber);
-                storage.saveTasks(tasks.getTasks());
-                return true;
-
-            case UNMARK:
-                int unmarkTaskNumber = Integer.parseInt(userExpression.substring(7));
-                tasks.unmarkTask(unmarkTaskNumber);
-                storage.saveTasks(tasks.getTasks());
-                return true;
-
-            case TODO:
-                tasks.createTodo(userExpression.substring(5));
-                storage.saveTasks(tasks.getTasks());
-                return true;
-
-            case DEADLINE:
-                tasks.createDeadline(userExpression.substring(9).trim());
-                storage.saveTasks(tasks.getTasks());
-                return true;
-
-            case EVENT:
-                tasks.createEvent(userExpression.substring(6).trim());
-                storage.saveTasks(tasks.getTasks());
-                return true;
-
-            case DELETE:
-                int index = Integer.parseInt(userExpression.substring(7));
-                tasks.deleteTask(index);
-                storage.saveTasks(tasks.getTasks());
-                return true;
-
-            case DUE:
-                String date = userExpression.substring(3).trim();
-                ArrayList<Task> dueTasks = tasks.getDueTasks(date);
-                ui.showTaskList(tasks.formatDueTasks(dueTasks, date));
-                return true;
-
-            case UNKNOWN:
-                throw new WaguriException("COMMAND NOT RECOGNIZED! Available commands: " +
-                        Parser.getAvailableCommands());
-
-            default:
-                throw new WaguriException("Unexpected command: " + command);
+        case BYE:
+            ui.showGoodbye();
+            return false;
+        case LIST:
+            ui.showTaskList(tasks.getTasksAsString());
+            return true;
+        case MARK:
+            int taskNumber = Integer.parseInt(userExpression.substring(5));
+            tasks.markTask(taskNumber);
+            storage.saveTasks(tasks.getTasks());
+            return true;
+        case UNMARK:
+            int unmarkTaskNumber = Integer.parseInt(userExpression.substring(7));
+            tasks.unmarkTask(unmarkTaskNumber);
+            storage.saveTasks(tasks.getTasks());
+            return true;
+        case TODO:
+            tasks.createTodo(userExpression.substring(5));
+            storage.saveTasks(tasks.getTasks());
+            return true;
+        case DEADLINE:
+            tasks.createDeadline(userExpression.substring(9).trim());
+            storage.saveTasks(tasks.getTasks());
+            return true;
+        case EVENT:
+            tasks.createEvent(userExpression.substring(6).trim());
+            storage.saveTasks(tasks.getTasks());
+            return true;
+        case DELETE:
+            int index = Integer.parseInt(userExpression.substring(7));
+            tasks.deleteTask(index);
+            storage.saveTasks(tasks.getTasks());
+            return true;
+        case DUE:
+            String date = userExpression.substring(3).trim();
+            ArrayList<Task> dueTasks = tasks.getDueTasks(date);
+            ui.showTaskList(tasks.formatDueTasks(dueTasks, date));
+            return true;
+        case UNKNOWN:
+            throw new WaguriException("COMMAND NOT RECOGNIZED! Available commands: " +
+                    Parser.getAvailableCommands());
+        default:
+            throw new WaguriException("Unexpected command: " + command);
         }
     }
 
