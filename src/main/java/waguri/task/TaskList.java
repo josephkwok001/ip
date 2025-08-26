@@ -1,19 +1,36 @@
 package waguri.task;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import waguri.WaguriException;
 import waguri.storage.DateParser;
 
-
+/**
+ * Manages a collection of tasks and provides operations for task manipulation.
+ * Handles creation, modification, deletion, and querying of various task types
+ * including Todo, Deadline, and Event tasks. Also provides functionality to
+ * find tasks due on specific dates and format task lists for display.
+ */
 public class TaskList {
+    /** The list containing all tasks managed by this TaskList */
     private ArrayList<Task> tasks;
 
+    /**
+     * Constructs a TaskList with the specified initial list of tasks.
+     *
+     * @param tasks the initial ArrayList of tasks to manage
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Marks a task as done based on its index in the list.
+     * The index is 1-based (first task is index 1).
+     *
+     * @param index the 1-based index of the task to mark as done
+     * @throws WaguriException if the index is out of bounds (less than 1 or greater than list size)
+     */
     public void markTask(int index) throws WaguriException {
         if (index < 1 || index > tasks.size()) {
             throw new WaguriException("INVALID TASK NUMBER!");
@@ -21,6 +38,13 @@ public class TaskList {
         tasks.get(index - 1).markAsDone();
     }
 
+    /**
+     * Marks a task as not done based on its index in the list.
+     * The index is 1-based (first task is index 1).
+     *
+     * @param index the 1-based index of the task to unmark
+     * @throws WaguriException if the index is out of bounds (less than 1 or greater than list size)
+     */
     public void unmarkTask(int index) throws WaguriException {
         if (index < 1 || index > tasks.size()) {
             throw new WaguriException("INVALID TASK NUMBER!");
@@ -28,6 +52,13 @@ public class TaskList {
         tasks.get(index - 1).unmark();
     }
 
+    /**
+     * Deletes a task based on its index in the list.
+     * The index is 1-based (first task is index 1).
+     *
+     * @param index the 1-based index of the task to delete
+     * @throws WaguriException if the index is out of bounds (less than 1 or greater than list size)
+     */
     public void deleteTask(int index) throws WaguriException {
         if (index < 1 || index > tasks.size()) {
             throw new WaguriException("INVALID TASK NUMBER!");
@@ -35,6 +66,12 @@ public class TaskList {
         tasks.remove(index - 1);
     }
 
+    /**
+     * Creates a new Todo task and adds it to the task list.
+     *
+     * @param description the description of the todo task
+     * @throws WaguriException if the description is empty or contains only whitespace
+     */
     public void createTodo(String description) throws WaguriException {
         if (description.trim().isEmpty()) {
             throw new WaguriException("Sir! A todo needs a description.");
@@ -42,6 +79,13 @@ public class TaskList {
         tasks.add(new Todo(description));
     }
 
+    /**
+     * Creates a new Deadline task from user input and adds it to the task list.
+     * Parses the input string to extract description and deadline time.
+     *
+     * @param input the user input containing task description and /by time
+     * @throws WaguriException if the input format is invalid, missing /by, or has empty fields
+     */
     public void createDeadline(String input) throws WaguriException {
         if (!input.contains("/by")) {
             throw new WaguriException("Sir! A deadline needs /by time. Usage: deadline [task] /by [time]");
@@ -59,6 +103,13 @@ public class TaskList {
         tasks.add(new Deadline(description, by));
     }
 
+    /**
+     * Creates a new Event task from user input and adds it to the task list.
+     * Parses the input string to extract description, start time, and end time.
+     *
+     * @param input the user input containing task description, /from start time, and /to end time
+     * @throws WaguriException if the input format is invalid, missing /from or /to, or has empty fields
+     */
     public void createEvent(String input) throws WaguriException {
         if (!input.contains("/from") || !input.contains("/to")) {
             throw new WaguriException("Sir! An event needs /from and /to times.");
@@ -78,6 +129,15 @@ public class TaskList {
         tasks.add(new Event(description, from, to));
     }
 
+    /**
+     * Retrieves all tasks due on a specific date.
+     * For Deadline tasks, checks if the deadline falls on the target date.
+     * For Event tasks, checks if the event starts on the target date.
+     *
+     * @param dateString the date string to search for (will be parsed to LocalDateTime)
+     * @return an ArrayList of tasks due on the specified date
+     * @throws WaguriException if the date string cannot be parsed
+     */
     public ArrayList<Task> getDueTasks(String dateString) throws WaguriException {
         ArrayList<Task> dueTasks = new ArrayList<>();
         LocalDateTime targetDate = DateParser.parse(dateString);
@@ -99,6 +159,11 @@ public class TaskList {
         return dueTasks;
     }
 
+    /**
+     * Formats the entire task list as a numbered string for display.
+     *
+     * @return a formatted string showing all tasks with numbers, or a message if the list is empty
+     */
     public String getTasksAsString() {
         if (tasks.isEmpty()) {
             return "No tasks in your list!\n";
@@ -111,10 +176,22 @@ public class TaskList {
         return sb.toString();
     }
 
+    /**
+     * Returns the underlying ArrayList of tasks.
+     *
+     * @return the ArrayList containing all managed tasks
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * Formats a list of due tasks with a descriptive header for display.
+     *
+     * @param dueTasks the list of tasks due on a specific date
+     * @param date the date for which tasks are due
+     * @return a formatted string showing tasks due on the specified date, or a message if none exist
+     */
     public String formatDueTasks(ArrayList<Task> dueTasks, String date) {
         if (dueTasks.isEmpty()) {
             return "No tasks due on " + date + "!\n";
@@ -126,5 +203,4 @@ public class TaskList {
         }
         return sb.toString();
     }
-
 }
