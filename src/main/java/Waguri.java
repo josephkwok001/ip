@@ -1,10 +1,11 @@
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+import waguri.WaguriException;
+import waguri.storage.Storage;
+import waguri.task.Task;
+import waguri.task.TaskList;
+import waguri.ui.Parser;
+import waguri.ui.Ui;
 import java.util.ArrayList;
-import java.time.MonthDay;
+
 
 public class Waguri {
     private Storage storage;
@@ -80,7 +81,7 @@ public class Waguri {
             case DUE:
                 String date = userExpression.substring(3).trim();
                 ArrayList<Task> dueTasks = tasks.getDueTasks(date);
-                ui.showTaskList(formatDueTasks(dueTasks, date));
+                ui.showTaskList(tasks.formatDueTasks(dueTasks, date));
                 return true;
 
             case UNKNOWN:
@@ -92,25 +93,7 @@ public class Waguri {
         }
     }
 
-    private String formatDueTasks(ArrayList<Task> dueTasks, String date) {
-        if (dueTasks.isEmpty()) {
-            return "No tasks due on " + date + "!\n";
-        }
-
-        StringBuilder sb = new StringBuilder("Tasks due on " + date + ":\n");
-        for (Task task : dueTasks) {
-            sb.append(task + "\n");
-        }
-        return sb.toString();
-    }
-
     public static void main(String[] args) {
         new Waguri("./data/waguri.txt").run();
-    }
-}
-
-class WaguriException extends Exception {
-    public WaguriException(String message) {
-        super(message);
     }
 }

@@ -1,3 +1,6 @@
+package waguri.ui;
+
+
 public class Parser {
     public enum Command {
         TODO, DEADLINE, EVENT, DELETE, LIST, MARK, UNMARK, BYE, DUE, UNKNOWN

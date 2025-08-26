@@ -1,3 +1,6 @@
+package waguri.storage;
+
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

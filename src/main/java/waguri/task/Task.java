@@ -1,3 +1,5 @@
+package waguri.task;
+
 public class Task {
     private String description;
     private boolean status;

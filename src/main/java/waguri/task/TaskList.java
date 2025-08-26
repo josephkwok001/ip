@@ -1,14 +1,14 @@
+package waguri.task;
+
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import waguri.WaguriException;
+import waguri.storage.DateParser;
 
-import java.util.ArrayList;
 
 public class TaskList {
     private ArrayList<Task> tasks;
-
-    public TaskList() {
-        this.tasks = new ArrayList<>();
-    }
 
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
@@ -61,12 +61,12 @@ public class TaskList {
 
     public void createEvent(String input) throws WaguriException {
         if (!input.contains("/from") || !input.contains("/to")) {
-            throw new WaguriException("SOLDIER! An event needs /from and /to times.");
+            throw new WaguriException("Sir! An event needs /from and /to times.");
         }
 
         String[] parts = input.split("/from|/to");
         if (parts.length < 3) {
-            throw new WaguriException("SOLDIER! Usage: event [task] /from [start] /to [end]");
+            throw new WaguriException("Sir! Usage: event [task] /from [start] /to [end]");
         }
 
         String description = parts[0].trim();
@@ -113,6 +113,18 @@ public class TaskList {
 
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+
+    public String formatDueTasks(ArrayList<Task> dueTasks, String date) {
+        if (dueTasks.isEmpty()) {
+            return "No tasks due on " + date + "!\n";
+        }
+
+        StringBuilder sb = new StringBuilder("Tasks due on " + date + ":\n");
+        for (Task task : dueTasks) {
+            sb.append(task + "\n");
+        }
+        return sb.toString();
     }
 
 }
