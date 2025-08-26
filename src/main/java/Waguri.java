@@ -7,234 +7,110 @@ import java.util.ArrayList;
 import java.time.MonthDay;
 
 public class Waguri {
-    private static final String BORDER = "═╦══════════════════════════════════════════════════════════╦═";
-    public static void printBorder() {
-        System.out.println(BORDER);
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Waguri(String filePath) {
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
+        this.tasks = new TaskList(storage.loadTasks());
     }
 
-    public enum Command {
-        TODO,
-        DEADLINE,
-        EVENT,
-        DELETE,
-        LIST,
-        MARK,
-        UNMARK,
-        BYE,
-        DUE,
-        UNKNOWN
-    }
-    public static void getDeadlineTasks(ArrayList<Task> tasks, String date) {
-        try {
-            for (Task t : tasks) {
-                LocalDateTime date_Parse = DateParser.parse(date);
+    public void run() {
+        ui.showWelcome();
 
-                if (t instanceof Deadline){
-                    Deadline d = (Deadline) t;
-
-                    if(d.by.toLocalDate().equals(date_Parse.toLocalDate())){
-                        System.out.println(d);
-                    }
-                }
-                if (t instanceof Event){
-                    Event e = (Event) t;
-
-                    if(e.getFrom().toLocalDate().equals(date_Parse.toLocalDate())){
-                        System.out.println(e);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    public static class CommandParser {
-        public static Command parseCommand(String input) {
-            if (input == null || input.trim().isEmpty()) {
-                return Command.UNKNOWN;
-            }
-
-            String[] parts = input.split(" ", 2);
-            String commandWord = parts[0].toUpperCase();
-
+        boolean isRunning = true;
+        while (isRunning) {
             try {
-                return Command.valueOf(commandWord);
-            } catch (IllegalArgumentException e) {
-                return Command.UNKNOWN;
+                String userExpression = ui.readCommand();
+                Parser.Command command = Parser.parseCommand(userExpression);
+                isRunning = processCommand(command, userExpression);
+            } catch (WaguriException e) {
+                ui.showError(e.getMessage());
+            } catch (Exception e) {
+                ui.showError("Unexpected Error: " + e.getMessage());
             }
         }
     }
 
+    private boolean processCommand(Parser.Command command, String userExpression) throws WaguriException {
+        switch (command) {
+            case BYE:
+                ui.showGoodbye();
+                return false;
+
+            case LIST:
+                ui.showTaskList(tasks.getTasksAsString());
+                return true;
+
+            case MARK:
+                int taskNumber = Integer.parseInt(userExpression.substring(5));
+                tasks.markTask(taskNumber);
+                storage.saveTasks(tasks.getTasks());
+                return true;
+
+            case UNMARK:
+                int unmarkTaskNumber = Integer.parseInt(userExpression.substring(7));
+                tasks.unmarkTask(unmarkTaskNumber);
+                storage.saveTasks(tasks.getTasks());
+                return true;
+
+            case TODO:
+                tasks.createTodo(userExpression.substring(5));
+                storage.saveTasks(tasks.getTasks());
+                return true;
+
+            case DEADLINE:
+                tasks.createDeadline(userExpression.substring(9).trim());
+                storage.saveTasks(tasks.getTasks());
+                return true;
+
+            case EVENT:
+                tasks.createEvent(userExpression.substring(6).trim());
+                storage.saveTasks(tasks.getTasks());
+                return true;
+
+            case DELETE:
+                int index = Integer.parseInt(userExpression.substring(7));
+                tasks.deleteTask(index);
+                storage.saveTasks(tasks.getTasks());
+                return true;
+
+            case DUE:
+                String date = userExpression.substring(3).trim();
+                ArrayList<Task> dueTasks = tasks.getDueTasks(date);
+                ui.showTaskList(formatDueTasks(dueTasks, date));
+                return true;
+
+            case UNKNOWN:
+                throw new WaguriException("COMMAND NOT RECOGNIZED! Available commands: " +
+                        Parser.getAvailableCommands());
+
+            default:
+                throw new WaguriException("Unexpected command: " + command);
+        }
+    }
+
+    private String formatDueTasks(ArrayList<Task> dueTasks, String date) {
+        if (dueTasks.isEmpty()) {
+            return "No tasks due on " + date + "!\n";
+        }
+
+        StringBuilder sb = new StringBuilder("Tasks due on " + date + ":\n");
+        for (Task task : dueTasks) {
+            sb.append(task + "\n");
+        }
+        return sb.toString();
+    }
 
     public static void main(String[] args) {
-        Storage storage = new Storage("./data/waguri.txt");
-        ArrayList<Task> taskList = storage.loadTasks();
-        System.out.println(taskList);
-
-        printBorder();
-        System.out.println("Hiiii, I'm your personal chat bot Waguri");
-        System.out.println(" What can I do for you today?");
-        printBorder();
-
-        Scanner input = new Scanner(System.in);
-
-        while (input.hasNextLine()) {
-            try {
-                String userExpression = input.nextLine();
-                Command command = CommandParser.parseCommand(userExpression);
-
-                switch (command) {
-                case BYE:
-                    printBorder();
-                    System.out.println("Bye. Hope to see you again soon!");
-                    printBorder();
-                    break;
-                case LIST:
-                    printBorder();
-                    System.out.println("YOUR LIST:");
-                    for (int i = 0; i < taskList.size(); i++) {
-                        System.out.println((i + 1) + ". " + taskList.get(i));
-                    }
-                    printBorder();
-                    continue;
-                case MARK:
-                    int taskNumber = Integer.parseInt(userExpression.substring(5));
-                    taskList.get(taskNumber - 1).markAsDone();
-                    System.out.println("Nice! I've marked this task as done:\n" + taskList.get(taskNumber - 1));
-                    printBorder();
-                    storage.saveTasks(taskList);
-                    continue;
-                case UNMARK:
-                    int unmarkTaskNumber = Integer.parseInt(userExpression.substring(7));
-                    taskList.get(unmarkTaskNumber - 1).unmark();
-                    System.out.println("OK, I've marked this task as not done yet:\n"
-                            + taskList.get(unmarkTaskNumber - 1));
-                    storage.saveTasks(taskList);
-                    printBorder();
-
-                    continue;
-                case TODO:
-                    if (userExpression.trim().equalsIgnoreCase("todo")) {
-                        throw new WaguriException("Sir! A todo needs a description. Usage: todo [task]");
-                    }
-                    String todoTask = userExpression.substring(5);
-                    Todo todo = new Todo(todoTask);
-                    taskList.add(todo);
-                    storage.saveTasks(taskList);
-                    System.out.println("Got it. I've added this task:\n" + taskList.getLast()
-                            + "\nNow you have "
-                            + taskList.size()
-                            + " tasks in the list.\n");
-                    printBorder();
-
-                    continue;
-                case DEADLINE:
-                    if (userExpression.trim().equalsIgnoreCase("deadline")) {
-                        throw new WaguriException("Sir! A deadline needs details. "
-                                + "Usage: deadline [task] /by [time]");
-                    }
-
-                    String content = userExpression.substring(9).trim();
-                    String[] parts = content.split(" /by ", 2);
-
-                    if (parts.length < 2) {
-                        System.out.println("❌ Please use: deadline [task] /by [time]");
-                        continue;
-                    }
-
-                    String description = parts[0].trim();
-                    String time = parts[1].trim();
-                    LocalDateTime by = DateParser.parse(time);
-                    Deadline deadline_Task = new Deadline(description, by);
-
-                    taskList.add(deadline_Task);
-                    storage.saveTasks(taskList);
-                    System.out.println("Got it. I've added this task:\n"
-                            + taskList.getLast()
-                            + "\nNow you have "
-                            + taskList.size()
-                            + " tasks in the list.\n");
-                    printBorder();
-                    continue;
-                case EVENT:
-                    if (userExpression.trim().equalsIgnoreCase("event")) {
-                        throw new WaguriException("SOLDIER! An event needs details. "
-                                + "Usage: event [task] /from [start] /to [end]");
-                    }
-
-                    String contentEvent = userExpression.substring(6).trim();
-                    String[] partsEvent = contentEvent.split(" /from | /to ");
-
-                    if (partsEvent.length < 3) {
-                        System.out.println("❌ Please use: event [task] /from [start] /to [end]");
-                        continue;
-                    }
-
-                    String descriptionEvent = partsEvent[0].trim();
-                    LocalDateTime from = DateParser.parse(partsEvent[1].trim());
-                    LocalDateTime to = DateParser.parse(partsEvent[2].trim());
-                    Event event = new Event(descriptionEvent, from, to);
-
-                    taskList.add(event);
-                    storage.saveTasks(taskList);
-                    System.out.println("Got it. I've added this task:\n" + taskList.getLast() + "\nNow you have " + taskList.size() + " tasks in the list.\n");
-                    printBorder();
-                    continue;
-                case DELETE:
-                    if (userExpression.trim().equalsIgnoreCase("delete")) {
-                        throw new WaguriException("SOLDIER! You have not specified which event that needs to be deleted");
-                    }
-
-                    int index = Integer.parseInt(userExpression.substring(7));
-
-                    if (index < 1 || index > taskList.size()) {
-                        throw new WaguriException("INVALID TASK NUMBER!");
-                    }
-
-                    System.out.println("Noted. I've removed this task:\n");
-                    System.out.println(taskList.get(index - 1));
-                    taskList.remove(index - 1);
-                    System.out.println("Now you have "
-                            + taskList.size()
-                            + " tasks in the list.");
-                    continue;
-                case DUE:
-                    String date = userExpression.substring(3).trim();
-                    getDeadlineTasks(taskList, date);
-                    continue;
-                case UNKNOWN:
-                    StringBuilder commands = new StringBuilder();
-                    for (Command cmd : Command.values()) {
-                        if (cmd != Command.UNKNOWN) {
-                            if (commands.length() > 0) {
-                                commands.append(", ");
-                            }
-                            commands.append(cmd.name().toLowerCase());
-                        }
-                    }
-                    throw new WaguriException("COMMAND NOT RECOGNIZED! Available commands:"
-                            + commands.toString());
-                default:
-                    throw new WaguriException("Unexpected command: " + command);
-                }
-            } catch (WaguriException e) {
-                printBorder();
-                System.out.println("⚠️  " + e.getMessage());
-                printBorder();
-            } catch (Exception e) {
-                printBorder();
-                System.out.println("⚠️  Unexpected Error: " + e.getMessage());
-                printBorder();
-            }
-        }
+        new Waguri("./data/waguri.txt").run();
     }
+}
 
-
-
-    static class WaguriException extends Exception {
-        public WaguriException(String message) {
-            super(message);
-        }
+class WaguriException extends Exception {
+    public WaguriException(String message) {
+        super(message);
     }
 }
