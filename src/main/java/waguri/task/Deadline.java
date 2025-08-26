@@ -3,8 +3,6 @@ package waguri.task;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.MonthDay;
-
 
 
 public class Deadline extends Task {
@@ -27,9 +25,7 @@ public class Deadline extends Task {
         } else {
             formatter = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm");
         }
-
         return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")";
     }
-
 
 }

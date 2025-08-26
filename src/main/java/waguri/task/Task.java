@@ -19,7 +19,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return this.status ? "[X] " : "[ ] " + this.description;
+        return this.status ? "[X] " + this.description : "[] " + this.description;
     }
 
 }
