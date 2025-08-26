@@ -1,0 +1,4 @@
+[T][ ] homework
+[D][ ] cs2103 (by: 2025 Aug 26 23:59)
+[E][X]  (from: 2025 Aug 26 to: 2025 Aug 27)
+[T][ ] homework
