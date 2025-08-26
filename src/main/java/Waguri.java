@@ -8,19 +8,37 @@ import waguri.ui.Parser;
 import waguri.ui.Ui;
 import java.util.ArrayList;
 
-
-
+/**
+ * Main class for the Waguri task management application.
+ * Coordinates between user interface, task management, and storage components.
+ * Handles the main application lifecycle including initialization, command processing,
+ * and shutdown.
+ */
 public class Waguri {
+    /** The storage component responsible for saving and loading tasks */
     private Storage storage;
+    /** The task list component managing all tasks */
     private TaskList tasks;
+    /** The user interface component handling input and output */
     private Ui ui;
 
+    /**
+     * Constructs a new Waguri application instance.
+     * Initializes the UI, storage, and task list components.
+     *
+     * @param filePath the file path where tasks will be persisted
+     */
     public Waguri(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.tasks = new TaskList(storage.loadTasks());
     }
 
+    /**
+     * Starts the main application loop.
+     * Displays welcome message and processes user commands until exit.
+     * Handles exceptions and displays appropriate error messages.
+     */
     public void run() {
         ui.showWelcome();
 
@@ -38,6 +56,15 @@ public class Waguri {
         }
     }
 
+    /**
+     * Processes a single user command and executes the corresponding action.
+     * Handles all supported command types and manages task persistence.
+     *
+     * @param command the parsed command type
+     * @param userExpression the original user input string
+     * @return false if the application should exit (BYE command), true otherwise
+     * @throws WaguriException if the command is invalid or processing fails
+     */
     private boolean processCommand(Parser.Command command, String userExpression) throws WaguriException {
         switch (command) {
             case BYE:

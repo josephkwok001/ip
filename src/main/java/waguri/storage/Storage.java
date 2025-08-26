@@ -11,15 +11,31 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Handles file storage operations for tasks, including saving to and loading from a file.
+ * Manages directory and file creation, task serialization, and deserialization.
+ * Supports all task types (Todo, Deadline, Event) and maintains task status.
+ */
 public class Storage {
+    /** The file path where tasks are stored */
     private String filePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     * Ensures the directory and file exist by creating them if necessary.
+     *
+     * @param filepath the path to the file where tasks will be stored
+     */
     public Storage(String filepath) {
         this.filePath = filepath;
         doesDirectoryExists();
     }
 
+    /**
+     * Ensures that the directory containing the storage file exists.
+     * Creates both the directory and the file if they don't already exist.
+     * Handles IOException by printing error messages.
+     */
     private void doesDirectoryExists() {
         try {
             File file = new File(filePath);
@@ -42,6 +58,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves all tasks to the storage file.
+     * Each task is written as a string representation followed by a newline.
+     *
+     * @param tasks the ArrayList of tasks to be saved
+     */
     public void saveTasks(ArrayList<Task> tasks) {
         try (FileWriter writer = new FileWriter(filePath)) {
             for (Task t : tasks) {
@@ -53,6 +75,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * Parses each line of the file into the appropriate task type.
+     *
+     * @return an ArrayList of tasks loaded from the file
+     */
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -72,6 +100,13 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Parses a single line of text into a Task object.
+     * Handles all task types (Todo, Deadline, Event) and their status.
+     *
+     * @param line the string representation of a task from the storage file
+     * @return the parsed Task object, or null if parsing fails
+     */
     private Task parseTaskFromString(String line) {
         try {
             line = line.trim();
@@ -124,12 +159,4 @@ public class Storage {
         System.out.println("Failed to parse: " + line);
         return null;
     }
-
 }
-
-
-
-
-// save tasks
-// load tasks
-// Parse tasks from text format (in Storage class)
