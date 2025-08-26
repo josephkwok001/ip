@@ -203,4 +203,15 @@ public class TaskList {
         }
         return sb.toString();
     }
+
+    public ArrayList<Task> findTasks (String find) {
+        ArrayList<Task> found = new ArrayList<>();
+
+        for(Task t : tasks) {
+            if (t.getDescription().contains(find)) {
+                found.add(t);
+            }
+        }
+        return found;
+    }
 }

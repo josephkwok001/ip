@@ -105,6 +105,11 @@ public class Waguri {
             ArrayList<Task> dueTasks = tasks.getDueTasks(date);
             ui.showTaskList(tasks.formatDueTasks(dueTasks, date));
             return true;
+        case FIND:
+            String find_content = userExpression.substring(5).trim();
+            TaskList findTasks =  new TaskList(tasks.findTasks(find_content));
+            ui.showTaskList(findTasks.getTasksAsString());
+            return true;
         case UNKNOWN:
             throw new WaguriException("COMMAND NOT RECOGNIZED! Available commands: " +
                     Parser.getAvailableCommands());
