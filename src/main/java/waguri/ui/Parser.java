@@ -3,7 +3,7 @@ package waguri.ui;
 
 public class Parser {
     public enum Command {
-        TODO, DEADLINE, EVENT, DELETE, LIST, MARK, UNMARK, BYE, DUE, UNKNOWN
+        TODO, DEADLINE, EVENT, DELETE, LIST, MARK, UNMARK, BYE, DUE, UNKNOWN, FIND
     }
 
     public static Command parseCommand(String input) {
