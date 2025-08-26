@@ -1,3 +1,5 @@
+package waguri;
+
 import waguri.WaguriException;
 import waguri.storage.Storage;
 import waguri.task.Task;
@@ -5,6 +7,7 @@ import waguri.task.TaskList;
 import waguri.ui.Parser;
 import waguri.ui.Ui;
 import java.util.ArrayList;
+
 
 
 public class Waguri {
