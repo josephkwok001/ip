@@ -25,7 +25,7 @@ public class Event extends Task {
      * @param from the date and time when the event starts
      * @param to the date and time when the event ends
      */
-    public Event(String description, LocalDateTime from, LocalDateTime to){
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description, false);
         this.from = from;
         this.to = to;
@@ -53,22 +53,22 @@ public class Event extends Task {
      * @return a formatted string showing the task details and event time period
      */
     @Override
-    public String toString(){
-        DateTimeFormatter from_Format;
-        DateTimeFormatter to_Format;
+    public String toString() {
+        DateTimeFormatter fromFormat;
+        DateTimeFormatter toFormat;
 
         if (from.toLocalTime().equals(LocalTime.MIDNIGHT)) {
-            from_Format = DateTimeFormatter.ofPattern("yyyy MMM dd");
+            fromFormat = DateTimeFormatter.ofPattern("yyyy MMM dd");
         } else {
-            from_Format = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm");
+            fromFormat = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm");
         }
 
         if (to.toLocalTime().equals(LocalTime.MIDNIGHT)) {
-            to_Format = DateTimeFormatter.ofPattern("yyyy MMM dd");
+            toFormat = DateTimeFormatter.ofPattern("yyyy MMM dd");
         } else {
-            to_Format = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm");
+            toFormat = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm");
         }
 
-        return "[E]" + super.toString() + " (from: " + from.format(from_Format) + " to: " + to.format(to_Format) + ")";
+        return "[E]" + super.toString() + " (from: " + from.format(fromFormat) + " to: " + to.format(toFormat) + ")";
     }
 }

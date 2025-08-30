@@ -20,7 +20,7 @@ public class Task {
      * @param description the text description of the task
      * @param status the initial completion status (true for completed, false for pending)
      */
-    public Task(String description, boolean status){
+    public Task(String description, boolean status) {
         this.description = description;
         this.status = status;
     }
@@ -30,7 +30,7 @@ public class Task {
      * This operation is idempotent - calling it multiple times on an already
      * completed task has no additional effect.
      */
-    public void markAsDone(){
+    public void markAsDone() {
         this.status = true;
     }
 
@@ -39,7 +39,7 @@ public class Task {
      * This operation is idempotent - calling it multiple times on an already
      * unmarked task has no additional effect.
      */
-    public void unmark(){
+    public void unmark() {
         this.status = false;
     }
 

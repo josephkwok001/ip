@@ -1,8 +1,8 @@
 package waguri.task;
 
 /**
+ * requires a description.
  * Extends the base Task class to provide a basic task type that only
- * requires a description.  @see Task
  */
 public class Todo extends Task {
 
@@ -12,7 +12,7 @@ public class Todo extends Task {
      *
      * @param description the text description of the todo task
      */
-    public Todo(String description){
+    public Todo(String description) {
         super(description, false);
     }
 
@@ -24,7 +24,7 @@ public class Todo extends Task {
      * @return a formatted string showing the task type and details in the format "[T] [status] description"
      */
     @Override
-    public String toString(){
+    public String toString() {
         return "[T]" + super.toString();
     }
 }

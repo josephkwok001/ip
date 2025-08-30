@@ -1,15 +1,15 @@
 package waguri.task;
 
-import waguri.task.Todo;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class TaskTest {
 
     @Test
     public void testTodoCreation() {
         Todo todo = new Todo("Read book");
-        assertEquals("[T][ ] Read book", todo.toString());
+        assertEquals("[T][] Read book", todo.toString());
     }
 
     @Test
@@ -27,3 +27,4 @@ public class TaskTest {
         assertEquals("[D][] Submit assignment (by: 2024 Dec 25)", deadline.toString());
     }
 }
+

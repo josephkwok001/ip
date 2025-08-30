@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
     /** The date and time by which this task should be completed */
-    LocalDateTime by;
+    private LocalDateTime by;
 
     /**
      * Constructs a new Deadline task with the specified description and deadline.
@@ -22,7 +22,7 @@ public class Deadline extends Task {
      * @param description the text description of the deadline task
      * @param by the date and time by which the task should be completed
      */
-    public Deadline(String description, LocalDateTime by){
+    public Deadline(String description, LocalDateTime by) {
         super(description, false);
         this.by = by;
     }
@@ -32,7 +32,7 @@ public class Deadline extends Task {
      *
      * @return the LocalDateTime object representing the deadline
      */
-    public LocalDateTime getBy () {
+    public LocalDateTime getBy() {
         return this.by;
     }
 
@@ -49,7 +49,7 @@ public class Deadline extends Task {
      * @return a formatted string showing the task details and deadline
      */
     @Override
-    public String toString(){
+    public String toString() {
         DateTimeFormatter formatter;
 
         if (by.toLocalTime().equals(LocalTime.MIDNIGHT)) {

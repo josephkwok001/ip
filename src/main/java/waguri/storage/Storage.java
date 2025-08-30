@@ -1,15 +1,17 @@
 package waguri.storage;
 
-import waguri.task.Deadline;
-import waguri.task.Event;
-import waguri.task.Task;
-import waguri.task.Todo;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import waguri.task.Deadline;
+import waguri.task.Event;
+import waguri.task.Task;
+import waguri.task.Todo;
+
 
 /**
  * Handles file storage operations for tasks, including saving to and loading from a file.
@@ -42,14 +44,14 @@ public class Storage {
             File parentDirectory = file.getParentFile();
 
             if (!parentDirectory.exists()) {
-                boolean directory_Created = parentDirectory.mkdirs();
-                if (directory_Created) {
+                boolean directoryCreated = parentDirectory.mkdirs();
+                if (directoryCreated) {
                     System.out.println("Created data directory: " + parentDirectory.getPath());
                 }
             }
             if (!file.exists()) {
-                boolean file_created = file.createNewFile();
-                if (file_created) {
+                boolean fileCreated = file.createNewFile();
+                if (fileCreated) {
                     System.out.println("Created file: " + file.getPath());
                 }
             }
@@ -115,41 +117,48 @@ public class Storage {
             String remaining = line.substring(7).trim();
 
             switch (type) {
-                case "T":
-                    Todo todo = new Todo(remaining);
-                    if (isDone) todo.markAsDone();
-                    return todo;
+            case "T":
+                Todo todo = new Todo(remaining);
+                if (isDone) {
+                    todo.markAsDone();
+                }
+                return todo;
 
-                case "D":
-                    if (remaining.contains("(by:")) {
-                        int byIndex = remaining.indexOf("(by:");
-                        String description = remaining.substring(0, byIndex).trim();
-                        String time = remaining.substring(byIndex + 5, remaining.length() - 1).trim();
+            case "D":
+                if (remaining.contains("(by:")) {
+                    int byIndex = remaining.indexOf("(by:");
+                    String description = remaining.substring(0, byIndex).trim();
+                    String time = remaining.substring(byIndex + 5, remaining.length() - 1).trim();
 
-                        LocalDateTime by = DateParser.parse(time);
-                        Deadline deadline = new Deadline(description, by);
-                        if (isDone) deadline.markAsDone();
-                        return deadline;
+                    LocalDateTime by = DateParser.parse(time);
+                    Deadline deadline = new Deadline(description, by);
+                    if (isDone) {
+                        deadline.markAsDone();
                     }
-                    break;
+                    return deadline;
+                }
+                break;
+            case "E":
+                if (remaining.contains("(from:") && remaining.contains("to:")) {
+                    int fromIndex = remaining.indexOf("(from:");
+                    String description = remaining.substring(0, fromIndex).trim();
 
-                case "E":
-                    if (remaining.contains("(from:") && remaining.contains("to:")) {
-                        int fromIndex = remaining.indexOf("(from:");
-                        String description = remaining.substring(0, fromIndex).trim();
+                    String time = remaining.substring(fromIndex + 6, remaining.length() - 1).trim();
+                    String[] timeParts = time.split(" to:");
 
-                        String time = remaining.substring(fromIndex + 6, remaining.length() - 1).trim();
-                        String[] timeParts = time.split(" to:");
-
-                        if (timeParts.length >= 2) {
-                            LocalDateTime from = DateParser.parse(timeParts[0].trim());
-                            LocalDateTime to = DateParser.parse(timeParts[1].trim());
-                            Event event = new Event(description, from, to);
-                            if (isDone) event.markAsDone();
-                            return event;
+                    if (timeParts.length >= 2) {
+                        LocalDateTime from = DateParser.parse(timeParts[0].trim());
+                        LocalDateTime to = DateParser.parse(timeParts[1].trim());
+                        Event event = new Event(description, from, to);
+                        if (isDone) {
+                            event.markAsDone();
                         }
+                        return event;
                     }
-                    break;
+                }
+                break;
+            default:
+                break;
             }
         } catch (Exception e) {
             System.out.println("Error parsing task from: " + line + " - " + e.getMessage());
