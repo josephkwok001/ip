@@ -2,6 +2,7 @@ package waguri.task;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 import waguri.WaguriException;
 import waguri.storage.DateParser;
 
@@ -204,10 +205,16 @@ public class TaskList {
         return sb.toString();
     }
 
-    public ArrayList<Task> findTasks (String find) {
+    /**
+     * Finds a list of tasks that matches a description of the task.
+     *
+     * @param find String of the description of the task
+     * @return an AraryList that contains a list of tasks that matches the string description
+     */
+    public ArrayList<Task> findTasks(String find) {
         ArrayList<Task> found = new ArrayList<>();
 
-        for(Task t : tasks) {
+        for (Task t : tasks) {
             if (t.getDescription().contains(find)) {
                 found.add(t);
             }

@@ -1,12 +1,13 @@
 package waguri;
 
-import waguri.WaguriException;
+import java.util.ArrayList;
+
 import waguri.storage.Storage;
 import waguri.task.Task;
 import waguri.task.TaskList;
 import waguri.ui.Parser;
 import waguri.ui.Ui;
-import java.util.ArrayList;
+
 
 /**
  * Main class for the Waguri task management application.
@@ -28,6 +29,9 @@ public class Waguri {
      *
      * @param filePath the file path where tasks will be persisted
      */
+    public Waguri() {
+
+    }
     public Waguri(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -106,13 +110,13 @@ public class Waguri {
             ui.showTaskList(tasks.formatDueTasks(dueTasks, date));
             return true;
         case FIND:
-            String find_content = userExpression.substring(5).trim();
-            TaskList findTasks =  new TaskList(tasks.findTasks(find_content));
+            String findContent = userExpression.substring(5).trim();
+            TaskList findTasks = new TaskList(tasks.findTasks(findContent));
             ui.showTaskList(findTasks.getTasksAsString());
             return true;
         case UNKNOWN:
-            throw new WaguriException("COMMAND NOT RECOGNIZED! Available commands: " +
-                    Parser.getAvailableCommands());
+            throw new WaguriException("COMMAND NOT RECOGNIZED! Available commands: "
+                    + Parser.getAvailableCommands());
         default:
             throw new WaguriException("Unexpected command: " + command);
         }
@@ -120,5 +124,9 @@ public class Waguri {
 
     public static void main(String[] args) {
         new Waguri("./data/waguri.txt").run();
+    }
+
+    public String getResponse(String input) {
+        return "Waguri heard: " + input;
     }
 }
