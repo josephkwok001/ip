@@ -32,6 +32,7 @@ public class Waguri {
     public Waguri() {
 
     }
+
     public Waguri(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -52,7 +53,7 @@ public class Waguri {
                 String userExpression = ui.readCommand();
                 Parser.Command command = Parser.parseCommand(userExpression);
                 isRunning = processCommand(command, userExpression);
-            } catch (WaguriException e) {
+            } catch (waguri.WaguriException e) {
                 ui.showError(e.getMessage());
             } catch (Exception e) {
                 ui.showError("Unexpected Error: " + e.getMessage());
@@ -69,7 +70,7 @@ public class Waguri {
      * @return false if the application should exit (BYE command), true otherwise
      * @throws WaguriException if the command is invalid or processing fails
      */
-    private boolean processCommand(Parser.Command command, String userExpression) throws WaguriException {
+    private boolean processCommand(Parser.Command command, String userExpression) throws waguri.WaguriException {
         switch (command) {
         case BYE:
             ui.showGoodbye();
@@ -111,14 +112,15 @@ public class Waguri {
             return true;
         case FIND:
             String findContent = userExpression.substring(5).trim();
-            TaskList findTasks = new TaskList(tasks.findTasks(findContent));
+            String[] searchTerms = findContent.split("\\s+");
+            TaskList findTasks = new TaskList(tasks.findTasks(searchTerms));
             ui.showTaskList(findTasks.getTasksAsString());
             return true;
         case UNKNOWN:
-            throw new WaguriException("COMMAND NOT RECOGNIZED! Available commands: "
+            throw new waguri.WaguriException("COMMAND NOT RECOGNIZED! Available commands: "
                     + Parser.getAvailableCommands());
         default:
-            throw new WaguriException("Unexpected command: " + command);
+            throw new waguri.WaguriException("Unexpected command: " + command);
         }
     }
 

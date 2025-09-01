@@ -211,12 +211,14 @@ public class TaskList {
      * @param find String of the description of the task
      * @return an AraryList that contains a list of tasks that matches the string description
      */
-    public ArrayList<Task> findTasks(String find) {
-        ArrayList<Task> found = new ArrayList<>();
 
-        for (Task t : tasks) {
-            if (t.getDescription().contains(find)) {
-                found.add(t);
+    public ArrayList<Task> findTasks(String ... find) {
+        ArrayList<Task> found = new ArrayList<>();
+        for (int i = 0; i < find.length; i++) {
+            for (Task t : tasks) {
+                if (t.getDescription().contains(find[i])) {
+                    found.add(t);
+                }
             }
         }
         return found;
