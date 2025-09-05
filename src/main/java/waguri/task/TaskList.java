@@ -113,12 +113,12 @@ public class TaskList {
      */
     public void createEvent(String input) throws WaguriException {
         if (!input.contains("/from") || !input.contains("/to")) {
-            throw new WaguriException("Sir! An event needs /from and /to times.");
+            throw new WaguriException("An event needs /from and /to times.");
         }
 
         String[] parts = input.split("/from|/to");
         if (parts.length < 3) {
-            throw new WaguriException("Sir! Usage: event [task] /from [start] /to [end]");
+            throw new WaguriException("Usage: event [task] /from [start] /to [end]");
         }
 
         String description = parts[0].trim();
@@ -177,11 +177,6 @@ public class TaskList {
         return sb.toString();
     }
 
-    /**
-     * Returns the underlying ArrayList of tasks.
-     *
-     * @return the ArrayList containing all managed tasks
-     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }

@@ -35,21 +35,16 @@ public class Parser {
      *         is null, empty, or doesn't match any known command
      */
     public static Command parseCommand(String input) {
-        // Handle null or empty input gracefully
         if (input == null || input.trim().isEmpty()) {
             return Command.UNKNOWN;
         }
 
-        // Split input into command word and potential arguments
-        // The limit parameter of 2 ensures we only split on the first space
         String[] parts = input.split(" ", 2);
-        String commandWord = parts[0].toUpperCase(); // Convert to uppercase for enum matching
+        String commandWord = parts[0].toUpperCase();
 
         try {
-            // Attempt to convert the input word to a Command enum value
             return Command.valueOf(commandWord);
         } catch (IllegalArgumentException e) {
-            // Return UNKNOWN if the input doesn't match any valid command
             return Command.UNKNOWN;
         }
     }
@@ -65,15 +60,11 @@ public class Parser {
     public static String getAvailableCommands() {
         StringBuilder commands = new StringBuilder();
 
-        // Iterate through all command enum values
         for (Command cmd : Command.values()) {
-            // Skip the UNKNOWN command since it's not a valid user command
             if (cmd != Command.UNKNOWN) {
-                // Add comma separator if not the first command
                 if (commands.length() > 0) {
                     commands.append(", ");
                 }
-                // Add command name in lowercase for user-friendly display
                 commands.append(cmd.name().toLowerCase());
             }
         }

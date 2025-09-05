@@ -69,6 +69,9 @@ public class Event extends Task {
             toFormat = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm");
         }
 
+        assert fromFormat != null : "from (date) cannot not be null";
+        assert toFormat != null : "to (date) cannot not be null";
+
         return "[E]" + super.toString() + " (from: " + from.format(fromFormat) + " to: " + to.format(toFormat) + ")";
     }
 }

@@ -57,6 +57,9 @@ public class Deadline extends Task {
         } else {
             formatter = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm");
         }
+
+        assert by != null : "by (date) cannot be empty";
+
         return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")";
     }
 

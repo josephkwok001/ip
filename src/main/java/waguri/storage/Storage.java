@@ -55,9 +55,20 @@ public class Storage {
                     System.out.println("Created file: " + file.getPath());
                 }
             }
+            assert parentDirectory.exists()
+                    : "Critical Failure: Parent directory does not exist after attempted creation: "
+                            + parentDirectory.getAbsolutePath();
+            assert file.exists()
+                    : "Critical Failure: File does not exist after attempted creation: "
+                            + file.getAbsolutePath();
+            assert file.canWrite()
+                    : "Critical Failure: Cannot write to file: "
+                    + file.getAbsolutePath();
+
         } catch (IOException e) {
             System.out.println("Error creating directory/file: " + e.getMessage());
         }
+
     }
 
     /**
