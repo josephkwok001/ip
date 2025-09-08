@@ -112,6 +112,20 @@ public class Storage {
         return tasks;
     }
 
+    public void saveArchive(Task t) {
+        ArrayList<Task> archiveList = this.loadTasks();
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (Task task : archiveList) {
+                writer.write(task.toString() + "\n");
+            }
+            writer.write(t.toString() + "\n");
+            System.out.println("Tasks saved to archive " + filePath);
+        } catch (IOException e) {
+            System.out.println("Error archiving tasks: " + e.getMessage());
+        }
+    }
+
+
     /**
      * Parses a single line of text into a Task object.
      * Handles all task types (Todo, Deadline, Event) and their status.

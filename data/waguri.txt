@@ -1,4 +1,4 @@
-[D][] cs2103 (by: 2025 Aug 25 23:59)
-[D][] push (by: 2025 Aug 22 23:59)
-[D][] pull (by: 2025 Aug 26 23:59)
-[D][] leg (by: 2025 Aug 26 23:59)
+[T][] push
+[T][] pull
+[D][] assignment 2 (by: 2025 Aug 26 23:59)
+

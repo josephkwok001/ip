@@ -121,6 +121,10 @@ public class Waguri {
             TaskList findTasks = new TaskList(tasks.findTasks(searchTerms));
             ui.showTaskList(findTasks.getTasksAsString());
             return true;
+        case ARCHIEVE:
+            TaskList archieveTask = new TaskList(archiveStorage.loadTasks());
+            ui.showTaskList(archieveTask.getTasksAsString());
+            return true;
         case UNKNOWN:
             throw new waguri.WaguriException("COMMAND NOT RECOGNIZED! Available commands: "
                     + Parser.getAvailableCommands());

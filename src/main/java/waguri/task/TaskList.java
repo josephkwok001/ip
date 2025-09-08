@@ -158,6 +158,10 @@ public class TaskList {
         return false;
     }
 
+    public Task getTaskByIndex(int i){
+        return tasks.get(i - 1);
+    }
+
 
     /**
      * Formats the entire task list as a numbered string for display.

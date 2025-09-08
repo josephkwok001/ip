@@ -22,7 +22,8 @@ public class Parser {
         /** Exits the application */ BYE,
         /** Shows tasks due by a specific date */ DUE,
         /** Represents an unrecognized or invalid command */ UNKNOWN,
-        /** Searches for tasks containing specific text */ FIND
+        /** Searches for tasks containing specific text */ FIND,
+        /** Displays all archive tasks */ ARCHIEVE
     }
 
     /**
