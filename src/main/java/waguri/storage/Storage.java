@@ -120,19 +120,18 @@ public class Storage {
      * @return the parsed Task object, or null if parsing fails
      */
     private Task parseTaskFromString(String line) {
-        final int TYPE_INDEX = 1;
-        final int STATUS_INDEX = 4;
-        final int DESCRIPTION_START_INDEX = 7;
-
-        final String DONE_MARKER = "X";
-
         try {
             line = line.trim();
+            String type = line.substring(1, 2);
 
-            String type = line.substring(TYPE_INDEX, TYPE_INDEX + 1);
-            boolean isDone = line.substring(STATUS_INDEX, STATUS_INDEX + 1).equals(DONE_MARKER);
-            String remaining = line.substring(DESCRIPTION_START_INDEX).trim();
+            int descriptionStart = line.indexOf("] ", 3) + 2;
+            boolean isDone = false;
 
+            if (line.length() > 5 && line.charAt(3) == 'X') {
+                isDone = true;
+            }
+
+            String remaining = line.substring(descriptionStart).trim();
             switch (type) {
             case "T":
                 return createTodo(remaining, isDone);

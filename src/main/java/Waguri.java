@@ -106,7 +106,7 @@ public class Waguri {
             storage.saveTasks(tasks.getTasks());
             return true;
         case DUE:
-            String date = userExpression.substring(3).trim();
+            String date = userExpression.substring(4).trim();
             ArrayList<Task> dueTasks = tasks.getDueTasks(date);
             ui.showTaskList(tasks.formatDueTasks(dueTasks, date));
             return true;
