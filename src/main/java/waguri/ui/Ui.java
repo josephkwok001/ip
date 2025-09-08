@@ -89,8 +89,8 @@ public class Ui {
      */
     public void showTaskList(String taskListString) {
         showBorder();
-        System.out.println("YOUR LIST:"); // Section header for the task list
-        System.out.print(taskListString); // Actual task list content
+        System.out.println("YOUR LIST:");
+        System.out.print(taskListString);
         showBorder();
     }
 

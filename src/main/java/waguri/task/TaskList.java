@@ -2,6 +2,8 @@ package waguri.task;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import waguri.WaguriException;
 import waguri.storage.DateParser;
@@ -141,25 +143,21 @@ public class TaskList {
      * @throws WaguriException if the date string cannot be parsed
      */
     public ArrayList<Task> getDueTasks(String dateString) throws WaguriException {
-        ArrayList<Task> dueTasks = new ArrayList<>();
         LocalDateTime targetDate = DateParser.parse(dateString);
-
-        for (Task task : tasks) {
-            if (task instanceof Deadline) {
-                Deadline deadline = (Deadline) task;
-                if (deadline.getBy().toLocalDate().equals(targetDate.toLocalDate())) {
-                    dueTasks.add(task);
-                }
-            } else if (task instanceof Event) {
-                Event event = (Event) task;
-                if (event.getFrom().toLocalDate().equals(targetDate.toLocalDate())) {
-                    dueTasks.add(task);
-                }
-            }
-        }
-
-        return dueTasks;
+        return tasks.stream()
+                .filter(task -> isTaskDueOnDate(task, targetDate))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    private boolean isTaskDueOnDate(Task task, LocalDateTime targetDate) {
+        if (task instanceof Deadline deadline) {
+            return deadline.getBy().toLocalDate().equals(targetDate.toLocalDate());
+        } else if (task instanceof Event event) {
+            return event.getFrom().toLocalDate().equals(targetDate.toLocalDate());
+        }
+        return false;
+    }
+
 
     /**
      * Formats the entire task list as a numbered string for display.
@@ -210,14 +208,10 @@ public class TaskList {
      * @return an AraryList that contains a list of tasks that matches the string description
      */
     public ArrayList<Task> findTasks(String ... find) {
-        ArrayList<Task> found = new ArrayList<>();
-        for (int i = 0; i < find.length; i++) {
-            for (Task t : tasks) {
-                if (t.getDescription().contains(find[i])) {
-                    found.add(t);
-                }
-            }
-        }
-        return found;
+        return Arrays.stream(find)
+                .flatMap(term -> tasks.stream()
+                        .filter(task -> task.getDescription().contains(term))
+                )
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
