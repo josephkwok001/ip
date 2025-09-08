@@ -16,6 +16,7 @@ public class TaskList {
     /** The list containing all tasks managed by this TaskList */
     private ArrayList<Task> tasks;
 
+    public static final int MIN_TASK = 1;
     /**
      * Constructs a TaskList with the specified initial list of tasks.
      *
@@ -33,7 +34,7 @@ public class TaskList {
      * @throws WaguriException if the index is out of bounds (less than 1 or greater than list size)
      */
     public void markTask(int index) throws WaguriException {
-        if (index < 1 || index > tasks.size()) {
+        if (index < MIN_TASK || index > tasks.size()) {
             throw new WaguriException("INVALID TASK NUMBER!");
         }
         tasks.get(index - 1).markAsDone();
@@ -47,7 +48,7 @@ public class TaskList {
      * @throws WaguriException if the index is out of bounds (less than 1 or greater than list size)
      */
     public void unmarkTask(int index) throws WaguriException {
-        if (index < 1 || index > tasks.size()) {
+        if (index < MIN_TASK || index > tasks.size()) {
             throw new WaguriException("INVALID TASK NUMBER!");
         }
         tasks.get(index - 1).unmark();
@@ -61,7 +62,7 @@ public class TaskList {
      * @throws WaguriException if the index is out of bounds (less than 1 or greater than list size)
      */
     public void deleteTask(int index) throws WaguriException {
-        if (index < 1 || index > tasks.size()) {
+        if (index < MIN_TASK || index > tasks.size()) {
             throw new WaguriException("INVALID TASK NUMBER!");
         }
         tasks.remove(index - 1);
@@ -194,9 +195,11 @@ public class TaskList {
         }
 
         StringBuilder sb = new StringBuilder("Tasks due on " + date + ":\n");
+
         for (Task task : dueTasks) {
             sb.append(task + "\n");
         }
+
         return sb.toString();
     }
 
@@ -206,7 +209,6 @@ public class TaskList {
      * @param find String of the description of the task
      * @return an AraryList that contains a list of tasks that matches the string description
      */
-
     public ArrayList<Task> findTasks(String ... find) {
         ArrayList<Task> found = new ArrayList<>();
         for (int i = 0; i < find.length; i++) {

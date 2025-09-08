@@ -121,53 +121,26 @@ public class Storage {
      * @return the parsed Task object, or null if parsing fails
      */
     private Task parseTaskFromString(String line) {
+        final int TYPE_INDEX = 1;
+        final int STATUS_INDEX = 4;
+        final int DESCRIPTION_START_INDEX = 7;
+
+        final String DONE_MARKER = "X";
+
         try {
             line = line.trim();
-            String type = line.substring(1, 2);
-            boolean isDone = line.substring(4, 5).equals("X");
-            String remaining = line.substring(7).trim();
+
+            String type = line.substring(TYPE_INDEX, TYPE_INDEX + 1);
+            boolean isDone = line.substring(STATUS_INDEX, STATUS_INDEX + 1).equals(DONE_MARKER);
+            String remaining = line.substring(DESCRIPTION_START_INDEX).trim();
 
             switch (type) {
             case "T":
-                Todo todo = new Todo(remaining);
-                if (isDone) {
-                    todo.markAsDone();
-                }
-                return todo;
-
+                return createTodo(remaining, isDone);
             case "D":
-                if (remaining.contains("(by:")) {
-                    int byIndex = remaining.indexOf("(by:");
-                    String description = remaining.substring(0, byIndex).trim();
-                    String time = remaining.substring(byIndex + 5, remaining.length() - 1).trim();
-
-                    LocalDateTime by = DateParser.parse(time);
-                    Deadline deadline = new Deadline(description, by);
-                    if (isDone) {
-                        deadline.markAsDone();
-                    }
-                    return deadline;
-                }
-                break;
+                return createDeadline(remaining, isDone);
             case "E":
-                if (remaining.contains("(from:") && remaining.contains("to:")) {
-                    int fromIndex = remaining.indexOf("(from:");
-                    String description = remaining.substring(0, fromIndex).trim();
-
-                    String time = remaining.substring(fromIndex + 6, remaining.length() - 1).trim();
-                    String[] timeParts = time.split(" to:");
-
-                    if (timeParts.length >= 2) {
-                        LocalDateTime from = DateParser.parse(timeParts[0].trim());
-                        LocalDateTime to = DateParser.parse(timeParts[1].trim());
-                        Event event = new Event(description, from, to);
-                        if (isDone) {
-                            event.markAsDone();
-                        }
-                        return event;
-                    }
-                }
-                break;
+                return createEvent(remaining, isDone);
             default:
                 break;
             }
@@ -179,4 +152,63 @@ public class Storage {
         System.out.println("Failed to parse: " + line);
         return null;
     }
+
+    private Todo createTodo(String description, boolean isDone) {
+        Todo todo = new Todo(description);
+        if (isDone) {
+            todo.markAsDone();
+        }
+        return todo;
+    }
+
+    private Deadline createDeadline(String remaining, boolean isDone) throws TaskParseException {
+        if (!remaining.contains("(by:")) {
+            throw new TaskParseException("Missing deadline time marker in: " + remaining);
+        }
+
+        int byIndex = remaining.indexOf("(by:");
+        String description = remaining.substring(0, byIndex).trim();
+        String time = remaining.substring(byIndex + 5, remaining.length() - 1).trim();
+
+        LocalDateTime by = DateParser.parse(time);
+        Deadline deadline = new Deadline(description, by);
+        if (isDone) {
+            deadline.markAsDone();
+        }
+        return deadline;
+    }
+
+    private Event createEvent(String remaining, boolean isDone) throws TaskParseException {
+        if (!remaining.contains("(from:") || !remaining.contains("to:")) {
+            throw new TaskParseException("Missing event time markers in: " + remaining);
+        }
+
+        int fromIndex = remaining.indexOf("(from:");
+        String description = remaining.substring(0, fromIndex).trim();
+
+        String time = remaining.substring(fromIndex + 6, remaining.length() - 1).trim();
+        String[] timeParts = time.split(" to:");
+
+        if (timeParts.length < 2) {
+            throw new TaskParseException("Invalid event time format");
+        }
+
+        LocalDateTime from = DateParser.parse(timeParts[0].trim());
+        LocalDateTime to = DateParser.parse(timeParts[1].trim());
+        Event event = new Event(description, from, to);
+        if (isDone) {
+            event.markAsDone();
+        }
+        return event;
+
+    }
+
+    public class TaskParseException extends Exception {
+        public TaskParseException(String message) {
+            super(message);
+        }
+    }
+
 }
+
+
