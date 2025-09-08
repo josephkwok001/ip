@@ -12,7 +12,6 @@ import waguri.task.Event;
 import waguri.task.Task;
 import waguri.task.Todo;
 
-
 /**
  * Handles file storage operations for tasks, including saving to and loading from a file.
  * Manages directory and file creation, task serialization, and deserialization.
