@@ -22,6 +22,9 @@ public class Waguri {
     private TaskList tasks;
     /** The user interface component handling input and output */
     private Ui ui;
+    /** The storage component responsible for archive */
+    private Storage archiveStorage;
+
 
     /**
      * Constructs a new Waguri application instance.
@@ -37,6 +40,7 @@ public class Waguri {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.tasks = new TaskList(storage.loadTasks());
+        this.archiveStorage = new Storage("./data/waguriArchive.txt");
     }
 
     /**
@@ -102,11 +106,12 @@ public class Waguri {
             return true;
         case DELETE:
             int index = Integer.parseInt(userExpression.substring(7));
+            archiveStorage.saveArchive(tasks.getTaskByIndex(index));
             tasks.deleteTask(index);
             storage.saveTasks(tasks.getTasks());
             return true;
         case DUE:
-            String date = userExpression.substring(4).trim();
+            String date = userExpression.substring(3).trim();
             ArrayList<Task> dueTasks = tasks.getDueTasks(date);
             ui.showTaskList(tasks.formatDueTasks(dueTasks, date));
             return true;
