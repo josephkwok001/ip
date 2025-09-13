@@ -33,7 +33,10 @@ public class Waguri {
      * @param filePath the file path where tasks will be persisted
      */
     public Waguri() {
-
+        this.ui = new Ui();
+        this.storage = new Storage("./data/waguri.txt");
+        this.tasks = new TaskList(storage.loadTasks());
+        this.archiveStorage = new Storage("./data/waguriArchive.txt");
     }
 
     public Waguri(String filePath) {
@@ -138,6 +141,56 @@ public class Waguri {
     }
 
     public String getResponse(String input) {
-        return "Waguri heard: " + input;
+        if (input == null || input.trim().isEmpty()) {
+            return "Hello? Is anyone there?";
+        }
+
+        try {
+            String userExpression = input.trim();
+            Parser.Command command = Parser.parseCommand(userExpression);
+
+            // Process the command using your existing method
+            processCommand(command, userExpression);
+
+            // Return simple success messages
+            switch (command) {
+            case BYE:
+                return "Goodbye! Hope to see you again soon!";
+            case LIST:
+                return "Here are your tasks:\n" + tasks.getTasksAsString();
+            case MARK:
+                return "Nice! I've marked that task as done! ✅";
+            case UNMARK:
+                return "OK, I've marked that task as not done yet.";
+            case TODO:
+            case DEADLINE:
+            case EVENT:
+                return "Got it! I've added that task. 📝";
+            case DELETE:
+                return "Noted. I've removed that task! 🗑️";
+            case DUE:
+                return "Here are your tasks due on that date:";
+            case FIND:
+                return "Here are the matching tasks:";
+            case ARCHIEVE:
+                return "Here are your archived tasks:";
+            case UNKNOWN:
+                // Handle conversational input
+                if (userExpression.equalsIgnoreCase("hi") || userExpression.equalsIgnoreCase("hello")) {
+                    return "Hello! I'm Waguri! How can I help you today?";
+                } else if (userExpression.toLowerCase().contains("how are you")) {
+                    return "I'm doing great! Ready to help you with your tasks!";
+                } else if (userExpression.toLowerCase().contains("thank")) {
+                    return "You're welcome! 😊";
+                } else {
+                    return "I'm not sure what you mean. Try: list, todo, deadline, event, mark, unmark, delete";
+                }
+            default:
+                return "Command processed!";
+            }
+
+        } catch (Exception e) {
+            return "Oops! " + e.getMessage();
+        }
     }
 }
