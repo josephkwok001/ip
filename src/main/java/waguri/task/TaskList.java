@@ -218,4 +218,12 @@ public class TaskList {
                 )
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    public boolean isEmpty() {
+        if (this.tasks.get(0) == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

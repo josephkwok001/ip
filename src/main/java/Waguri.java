@@ -149,37 +149,60 @@ public class Waguri {
             String userExpression = input.trim();
             Parser.Command command = Parser.parseCommand(userExpression);
 
-            // Process the command using your existing method
             processCommand(command, userExpression);
 
-            // Return simple success messages
             switch (command) {
             case BYE:
-                return "Goodbye! Hope to see you again soon!";
+                return "🌟 Remember: Every ending is a new beginning. I'll be here when you're ready to conquer your next goals!";
+
             case LIST:
-                return "Here are your tasks:\n" + tasks.getTasksAsString();
+                if (tasks.isEmpty()) {
+                    return "🎯 Your canvas is empty! This is your opportunity to create something amazing. What will you achieve today?";
+                } else {
+                    return "📋 Your roadmap to success:\n" + tasks.getTasksAsString() +
+                            "\n\nEvery task you complete is a step toward your dreams! 🚀";
+                }
+
             case MARK:
-                return "Nice! I've marked that task as done! ✅";
+                return "✅ VICTORY! This is how champions are made! Keep this momentum going! 💪";
+
             case UNMARK:
-                return "OK, I've marked that task as not done yet.";
+                return "🔄 Task unmarked. You've got this!";
+
             case TODO:
+                return "🎯 Goal set! You're making it happen! ✨";
+
             case DEADLINE:
+                return "⏰ Deadline accepted! Pressure creates diamonds! 💎";
+
             case EVENT:
-                return "Got it! I've added that task. 📝";
+                return "📅 Scheduled! ";
+
             case DELETE:
-                return "Noted. I've removed that task! 🗑️";
+                return "🗑️ Deleted!";
+
             case DUE:
-                return "Here are your tasks due on that date:";
+                return "📅 Your upcoming milestones:\n" +
+                        "Remember: The best time to plant a tree was 20 years ago. The second best time is now! 🌳";
+
             case FIND:
-                return "Here are the matching tasks:";
+                return "🔍 Found your priorities! ⚡";
+
             case ARCHIEVE:
-                return "Here are your archived tasks:";
+                String archiveTasks = archiveStorage.getStorageTask();
+                if (archiveTasks.isEmpty()) {
+                    return "📦 Your archive awaits future accomplishments!";
+                } else {
+                    return "📦 Your hall of achievements:\n" + archiveTasks +
+                            "\n\nLook how far you've come! Your past efforts have built who you are today! 🌟";
+                }
+
             case UNKNOWN:
                 return "ERROR: I don't understand that command. Try: list, todo, deadline, event, mark, unmark, delete";
-            default:
-                return "Command processed!";
-            }
 
+            default:
+                return "⚡ Progress made! Small steps every day lead to massive results. Keep building your future! 🏆";
+            }
         } catch (Exception e) {
             return "ERROR: " + e.getMessage();
         }

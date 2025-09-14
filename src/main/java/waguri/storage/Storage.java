@@ -10,6 +10,7 @@ import java.util.Scanner;
 import waguri.task.Deadline;
 import waguri.task.Event;
 import waguri.task.Task;
+import waguri.task.TaskList;
 import waguri.task.Todo;
 
 /**
@@ -87,6 +88,10 @@ public class Storage {
         }
     }
 
+    public String getStorageTask() {
+        TaskList tasks = new TaskList(this.loadTasks());
+        return tasks.getTasksAsString();
+    }
     /**
      * Loads tasks from the storage file.
      * Parses each line of the file into the appropriate task type.

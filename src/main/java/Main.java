@@ -11,7 +11,7 @@ import waguri.Waguri;
 
 
 public class Main extends Application {
-    private Waguri waguri = new Waguri();
+    private Waguri waguri = new Waguri("./data/waguri.txt");
 
     @Override
     public void start(Stage stage) {
