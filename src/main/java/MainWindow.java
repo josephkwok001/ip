@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import waguri.Waguri;
+import waguri.ui.Ui;
 
 /**
  * Controller for the main GUI.
@@ -22,23 +23,31 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
+    private Ui ui;
+
     private Waguri waguri;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Luffy.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/Zoro.png"));
+    private Image waguriImage = new Image(this.getClass().getResourceAsStream("/images/Zoro.png"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.setStyle("-fx-background-color: #f7fafc;");
+        scrollPane.setStyle("-fx-background: #f7fafc; -fx-border-color: #f7fafc;");
+
+        String welcomeMessage = "👋 Hello! I'm Waguri, your task management assistant!\n" +
+                "✨ Type 'help' to see what I can do for you!";
+        dialogContainer.getChildren().add(DialogBox.getWaguriDialog(welcomeMessage, waguriImage));
     }
 
-    /** Injects the Duke instance */
-    public void setDuke(Waguri d) {
+    /** Injects the Waguri instance */
+    public void setWaguri(Waguri d) {
         waguri = d;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing Waguri's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
@@ -47,7 +56,7 @@ public class MainWindow extends AnchorPane {
         String response = waguri.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getWaguriDialog(response, waguriImage)
         );
         userInput.clear();
     }

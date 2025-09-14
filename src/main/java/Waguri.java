@@ -128,6 +128,9 @@ public class Waguri {
             TaskList archieveTask = new TaskList(archiveStorage.loadTasks());
             ui.showTaskList(archieveTask.getTasksAsString());
             return true;
+        case HELP:
+            ui.showHelp();
+            return true;
         case UNKNOWN:
             throw new waguri.WaguriException("COMMAND NOT RECOGNIZED! Available commands: "
                     + Parser.getAvailableCommands());
@@ -159,15 +162,17 @@ public class Waguri {
                 if (tasks.isEmpty()) {
                     return "🎯 Your canvas is empty! This is your opportunity to create something amazing. What will you achieve today?";
                 } else {
-                    return "📋 Your roadmap to success:\n" + tasks.getTasksAsString() +
-                            "\n\nEvery task you complete is a step toward your dreams! 🚀";
+                    String taskList = tasks.getTasksAsString();
+                    String formattedTasks = taskList.replaceAll("\\[X\\]", "✅");
+
+                    return formattedTasks;
                 }
 
             case MARK:
                 return "✅ VICTORY! This is how champions are made! Keep this momentum going! 💪";
 
             case UNMARK:
-                return "🔄 Task unmarked. You've got this!";
+                return "🔄 You've got this!";
 
             case TODO:
                 return "🎯 Goal set! You're making it happen! ✨";
@@ -200,6 +205,9 @@ public class Waguri {
             case UNKNOWN:
                 return "ERROR: I don't understand that command. Try: list, todo, deadline, event, mark, unmark, delete";
 
+            case HELP:
+                return "Available commands are: " +
+                        Parser.getAvailableCommands();
             default:
                 return "⚡ Progress made! Small steps every day lead to massive results. Keep building your future! 🏆";
             }

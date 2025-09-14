@@ -42,6 +42,11 @@ public class Ui {
         showBorder();
     }
 
+    public void showHelp() {
+        System.out.println("Available commands: "
+                + Parser.getAvailableCommands());
+    }
+
     /**
      * Reads a command from the user via standard input.
      *

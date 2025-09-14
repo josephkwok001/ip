@@ -1,4 +1,5 @@
 [T][] push
-[T][] pull
-[D][] assignment 2 (by: 2025 Aug 26 23:59)
+[T][X] pull
+[D][X] assignment 2 (by: 2025 Aug 26 23:59)
 [T][] legs
+[T][] homework

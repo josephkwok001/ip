@@ -47,6 +47,10 @@ public class Task {
         return this.description;
     }
 
+    public boolean getStatus() {
+        return this.status;
+    }
+
     /**
      * Returns a string representation of the task showing its status and description.
      * The format is "[X] description" for completed tasks and "[] description" for

@@ -40,6 +40,10 @@ public class Event extends Task {
         return this.from;
     }
 
+    public LocalDateTime getTo() {
+        return this.to;
+    }
+
     /**
      * Returns a formatted string representation of the event task.
      * The format includes the task type identifier [E], the parent class

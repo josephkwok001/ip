@@ -23,7 +23,8 @@ public class Parser {
         /** Shows tasks due by a specific date */ DUE,
         /** Represents an unrecognized or invalid command */ UNKNOWN,
         /** Searches for tasks containing specific text */ FIND,
-        /** Displays all archive tasks */ ARCHIEVE
+        /** Displays all archive tasks */ ARCHIEVE,
+        HELP
     }
 
     /**
