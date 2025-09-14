@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 import javafx.scene.Node;
@@ -15,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -39,6 +39,11 @@ public class DialogBox extends HBox {
         dialog.setText(text);
         displayPicture.setImage(img);
 
+        this.setSpacing(5); // Reduced from 10 to 5
+        this.setAlignment(Pos.TOP_RIGHT); // For user messages
+
+        setLayout();
+
         if (isError) {
             applyErrorStyle();
         } else if (isUser) {
@@ -47,6 +52,19 @@ public class DialogBox extends HBox {
             applyBotStyle();
         }
 
+    }
+
+    private void setLayout() {
+        dialog.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(dialog, Priority.ALWAYS);
+
+        this.setMaxWidth(Double.MAX_VALUE);
+
+        dialog.maxWidthProperty().bind(
+                this.widthProperty()
+                        .subtract(displayPicture.getFitWidth() + 20)
+                        .subtract(this.getPadding().getLeft() + this.getPadding().getRight())
+        );
     }
 
     /**
@@ -84,35 +102,30 @@ public class DialogBox extends HBox {
     }
 
     private void applyBotStyle() {
-        // Clean, modern bot message style
-        dialog.setStyle("-fx-background-color: #f8f9fa; " +
-                "-fx-text-fill: #2d3748; " +
-                "-fx-border-color: #e2e8f0; " +
+        dialog.setStyle("-fx-background-color: #374151; " +
+                "-fx-text-fill: #f3f4f6; " +
+                "-fx-border-color: #4b5563; " +
                 "-fx-border-width: 1px; " +
-                "-fx-border-radius: 12px; " +
-                "-fx-background-radius: 12px; " +
-                "-fx-padding: 12px 16px; " +
+                "-fx-border-radius: 18px 18px 18px 4px; " +
+                "-fx-background-radius: 18px 18px 18px 4px; " +
+                "-fx-padding: 14px 18px; " +
                 "-fx-font-family: 'Segoe UI', sans-serif; " +
                 "-fx-font-size: 14px; " +
-                "-fx-line-spacing: 1.4;");
+                "-fx-line-spacing: 1.5;");
     }
+
     private void applyUserStyle() {
-        dialog.setStyle("-fx-background-color: #007bff; " +
+        dialog.setStyle("-fx-background-color: #6366f1; " +
                 "-fx-text-fill: white; " +
-                "-fx-border-color: #0056b3; " +
+                "-fx-border-color: #4f46e5; " +
                 "-fx-border-width: 1px; " +
-                "-fx-border-radius: 12px; " +
-                "-fx-background-radius: 12px; " +
-                "-fx-padding: 12px 16px; " +
+                "-fx-border-radius: 18px 18px 4px 18px; " +
+                "-fx-background-radius: 18px 18px 4px 18px; " +
+                "-fx-padding: 14px 18px; " +
                 "-fx-font-family: 'Segoe UI', sans-serif; " +
                 "-fx-font-size: 14px; " +
-                "-fx-line-spacing: 1.4;");
-    }
-
-
-    {
-        this.setSpacing(10);
-        this.setPadding(new Insets(5, 10, 5, 10));
+                "-fx-line-spacing: 1.5; " +
+                "-fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.3), 6, 0.2, 0, 2);");
     }
 
 

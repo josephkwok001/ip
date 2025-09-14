@@ -1,5 +1,3 @@
-[T][] push
-[T][X] pull
-[D][X] assignment 2 (by: 2025 Aug 26 23:59)
-[T][] legs
 [T][] homework
+[T][] homework
+[D][] cs2103T ip (by: 2025 Sep 14 23:59)

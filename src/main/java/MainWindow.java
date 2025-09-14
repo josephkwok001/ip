@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import waguri.Waguri;
-import waguri.ui.Ui;
 
 /**
  * Controller for the main GUI.
@@ -23,8 +22,6 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private Ui ui;
-
     private Waguri waguri;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Luffy.png"));
@@ -32,6 +29,13 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     public void initialize() {
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        dialogContainer.setFillWidth(true);
+
+        userInput.setMaxWidth(Double.MAX_VALUE);
+
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.setStyle("-fx-background-color: #f7fafc;");
         scrollPane.setStyle("-fx-background: #f7fafc; -fx-border-color: #f7fafc;");
@@ -39,6 +43,7 @@ public class MainWindow extends AnchorPane {
         String welcomeMessage = "👋 Hello! I'm Waguri, your task management assistant!\n" +
                 "✨ Type 'help' to see what I can do for you!";
         dialogContainer.getChildren().add(DialogBox.getWaguriDialog(welcomeMessage, waguriImage));
+
     }
 
     /** Injects the Waguri instance */
