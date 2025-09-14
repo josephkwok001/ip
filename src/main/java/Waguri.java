@@ -175,22 +175,13 @@ public class Waguri {
             case ARCHIEVE:
                 return "Here are your archived tasks:";
             case UNKNOWN:
-                // Handle conversational input
-                if (userExpression.equalsIgnoreCase("hi") || userExpression.equalsIgnoreCase("hello")) {
-                    return "Hello! I'm Waguri! How can I help you today?";
-                } else if (userExpression.toLowerCase().contains("how are you")) {
-                    return "I'm doing great! Ready to help you with your tasks!";
-                } else if (userExpression.toLowerCase().contains("thank")) {
-                    return "You're welcome! 😊";
-                } else {
-                    return "I'm not sure what you mean. Try: list, todo, deadline, event, mark, unmark, delete";
-                }
+                return "ERROR: I don't understand that command. Try: list, todo, deadline, event, mark, unmark, delete";
             default:
                 return "Command processed!";
             }
 
         } catch (Exception e) {
-            return "Oops! " + e.getMessage();
+            return "ERROR: " + e.getMessage();
         }
     }
 }
