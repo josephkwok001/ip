@@ -1,6 +1,6 @@
 # Waguri User Guide
 
-![Screenshot](/docs/Ui.png)
+![Screenshot](Ui.png)
 
 This is a bot called that acts like a task management chatbot. 
 There are several methods that users can use, which includes: todo, deadline, event, delete, list, mark, unmark, bye, due, find, archieve, help.
