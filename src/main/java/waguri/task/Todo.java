@@ -16,6 +16,7 @@ public class Todo extends Task {
         super(description, false);
     }
 
+
     /**
      * Returns a formatted string representation of the todo task.
      * The format includes the task type identifier [T] followed by
@@ -27,4 +28,5 @@ public class Todo extends Task {
     public String toString() {
         return "[T]" + super.toString();
     }
+
 }

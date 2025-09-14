@@ -1,3 +1,9 @@
 [D][] push (by: 2025 Aug 22 23:59)
 [D][] assignment 3 (by: 2025 Sep 18)
 [T][] leg
+[T][] homework
+[D][] cs2103T ip (by: 2025 Sep 14 23:59)
+[T][] homework
+[T][] homework
+[T][] push
+[D][X] cs2103 (by: 2025 Sep 15 23:59)

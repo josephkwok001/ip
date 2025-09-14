@@ -158,11 +158,9 @@ public class TaskList {
         return false;
     }
 
-    public Task getTaskByIndex(int i){
+    public Task getTaskByIndex(int i) {
         return tasks.get(i - 1);
     }
-
-
     /**
      * Formats the entire task list as a numbered string for display.
      *
@@ -223,7 +221,7 @@ public class TaskList {
     }
 
     public boolean isEmpty() {
-        if (this.tasks.get(0) == null) {
+        if (tasks.isEmpty()) {
             return true;
         } else {
             return false;

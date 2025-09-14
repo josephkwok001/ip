@@ -1,3 +1,2 @@
-[T][] homework
-[T][] homework
-[D][] cs2103T ip (by: 2025 Sep 14 23:59)
+[E][] hackathon (from: 2025 Sep 14 23:59 to: 2025 Sep 15 23:59)
+[T][] push

@@ -156,11 +156,12 @@ public class Waguri {
 
             switch (command) {
             case BYE:
-                return "🌟 Remember: Every ending is a new beginning. I'll be here when you're ready to conquer your next goals!";
+                return "🌟Goodbye!";
 
             case LIST:
                 if (tasks.isEmpty()) {
-                    return "🎯 Your canvas is empty! This is your opportunity to create something amazing. What will you achieve today?";
+                    return "Your list is empty! "
+                            + "What will you achieve today?";
                 } else {
                     String taskList = tasks.getTasksAsString();
                     String formattedTasks = taskList.replaceAll("\\[X\\]", "✅");
@@ -169,7 +170,7 @@ public class Waguri {
                 }
 
             case MARK:
-                return "✅ VICTORY! This is how champions are made! Keep this momentum going! 💪";
+                return "✅ VICTORY! Keep this momentum going! 💪";
 
             case UNMARK:
                 return "🔄 You've got this!";
@@ -178,38 +179,45 @@ public class Waguri {
                 return "🎯 Goal set! You're making it happen! ✨";
 
             case DEADLINE:
-                return "⏰ Deadline accepted! Pressure creates diamonds! 💎";
+                return "Deadline accepted! Pressure creates diamonds! 💎";
 
             case EVENT:
-                return "📅 Scheduled! ";
+                return "Event Scheduled! ";
 
             case DELETE:
-                return "🗑️ Deleted!";
+                return "Deleted!";
 
             case DUE:
-                return "📅 Your upcoming milestones:\n" +
-                        "Remember: The best time to plant a tree was 20 years ago. The second best time is now! 🌳";
+                String date = userExpression.substring(3).trim();
+                ArrayList<Task> dueTasks = tasks.getDueTasks(date);
+                return "Your upcoming tasks"
+                        + tasks.formatDueTasks(dueTasks, date);
 
             case FIND:
-                return "🔍 Found your priorities! ⚡";
+                String findContent = userExpression.substring(5).trim();
+                String[] searchTerms = findContent.split("\\s+");
+                TaskList findTasks = new TaskList(tasks.findTasks(searchTerms));
+                return findTasks.getTasksAsString();
 
             case ARCHIEVE:
                 String archiveTasks = archiveStorage.getStorageTask();
+                String formattedTasks = archiveTasks.replaceAll("\\[X\\]", "✅");
+
                 if (archiveTasks.isEmpty()) {
-                    return "📦 Your archive awaits future accomplishments!";
+                    return "Your archive is empty!";
                 } else {
-                    return "📦 Your hall of achievements:\n" + archiveTasks +
-                            "\n\nLook how far you've come! Your past efforts have built who you are today! 🌟";
+                    return "Your hall of achievements:\n" + formattedTasks
+                            + "\n\nLook how far you've come! 🌟";
                 }
 
             case UNKNOWN:
-                return "ERROR: I don't understand that command. Try: list, todo, deadline, event, mark, unmark, delete";
+                return "ERROR: I do not understand that command. Try: list, todo, deadline, event, mark, unmark, delete";
 
             case HELP:
-                return "Available commands are: " +
-                        Parser.getAvailableCommands();
+                return "Available commands are: "
+                        + Parser.getAvailableCommands();
             default:
-                return "⚡ Progress made! Small steps every day lead to massive results. Keep building your future! 🏆";
+                return "Keep building your future! 🏆";
             }
         } catch (Exception e) {
             return "ERROR: " + e.getMessage();

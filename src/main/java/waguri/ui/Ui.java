@@ -69,16 +69,6 @@ public class Ui {
     }
 
     /**
-     * Displays a general message to the user without any special formatting.
-     * Used for simple output that doesn't require border decoration.
-     *
-     * @param message the message to display
-     */
-    public void showMessage(String message) {
-        System.out.println(message);
-    }
-
-    /**
      * Displays the border line used for formatting UI sections.
      * This creates visual separation between different parts of the interface.
      */
@@ -99,12 +89,4 @@ public class Ui {
         showBorder();
     }
 
-    /**
-     * Closes the scanner and releases associated system resources.
-     * This method should be called when the UI is no longer needed
-     * to prevent resource leaks.
-     */
-    public void close() {
-        scanner.close();
-    }
 }
