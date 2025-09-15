@@ -8,10 +8,8 @@ import java.util.Scanner;
  * and formatting output with consistent borders.
  */
 public class Ui {
-    // Unicode border character for consistent UI formatting
     private static final String BORDER = "═╦══════════════════════════════════════════════════════════╦═";
 
-    // Scanner object for reading user input from the console
     private Scanner scanner;
 
     /**

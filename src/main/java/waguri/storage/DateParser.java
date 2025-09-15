@@ -31,6 +31,28 @@ public class DateParser {
             return now.withHour(23).withMinute(59);
         }
 
+        if (input.equals("monday") || input.equals("mon")) {
+            return now.with(DayOfWeek.MONDAY).withHour(23).withMinute(59);
+        }
+        if (input.equals("tuesday") || input.equals("tues") || input.equals("tue")) {
+            return now.with(DayOfWeek.TUESDAY).withHour(23).withMinute(59);
+        }
+        if (input.equals("wednesday") || input.equals("wed")) {
+            return now.with(DayOfWeek.WEDNESDAY).withHour(23).withMinute(59);
+        }
+        if (input.equals("thursday") || input.equals("thurs") || input.equals("thur")) {
+            return now.with(DayOfWeek.THURSDAY).withHour(23).withMinute(59);
+        }
+        if (input.equals("friday") || input.equals("fri")) {
+            return now.with(DayOfWeek.FRIDAY).withHour(23).withMinute(59);
+        }
+        if (input.equals("saturday") || input.equals("sat")) {
+            return now.with(DayOfWeek.SATURDAY).withHour(23).withMinute(59);
+        }
+        if (input.equals("sunday") || input.equals("sun")) {
+            return now.with(DayOfWeek.SUNDAY).withHour(23).withMinute(59);
+        }
+
         if (input.equals("1am")) {
             return now.withHour(1).withMinute(0);
         }

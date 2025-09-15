@@ -30,12 +30,6 @@ public class Event extends Task {
         this.from = from;
         this.to = to;
     }
-
-    /**
-     * Returns the start date and time of this event.
-     *
-     * @return the LocalDateTime object representing the event start time
-     */
     public LocalDateTime getFrom() {
         return this.from;
     }

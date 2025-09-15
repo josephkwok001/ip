@@ -21,7 +21,6 @@ public class TaskTest {
 
     @Test
     public void testDeadlineCreation() {
-        // This test might need mocking DateParser if it's complex
         Deadline deadline = new Deadline("Submit assignment",
                 java.time.LocalDateTime.of(2024, 12, 25, 0, 0));
         assertEquals("[D][] Submit assignment (by: 2024 Dec 25)", deadline.toString());

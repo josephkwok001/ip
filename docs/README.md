@@ -2,77 +2,104 @@
 
 ![Screenshot](Ui.png)
 
-This is a bot called that acts like a task management chatbot. 
+This is a chatbot designed for task management. 
 There are several methods that users can use, which includes: todo, deadline, event, delete, list, mark, unmark, bye, due, find, archieve, help.
 
-## Adding todo
+## Viewing Help: help
+Shows a list of all available commands.
 
-A todo task is a task that has no time limit set to ti.The format to add a deadline is as follows:
+    Format: help
 
-    todo "task_name" 
+## Listing All Tasks: list
+Displays all tasks in your task list.
 
-Example
+    Format: list
+
+
+
+## Adding a Todo Task: todo
+
+Adds a simple task with no time constraint.
+
+    Format: todo TASK_DESCRIPTION
+
+Example:
+
+    todo Read book
 
     todo 100 pushups
 
-## Adding deadlines
-
-A deadline is a task that has a time limit to it. The format to add a deadline is as follows:
-
-    deadline "task_name" /by "time"
-
-Example
-
-    deadline cs2103t ip /by tonight
-
-## Adding Event
-
-An event is a task that has a time period to it (i.e. starts from ... and ends at ...) 
-The format to add a event is as follows:
-
-    event "task_name" /from "time1" /to "time2"
-
-Example
-
-    event hackathon /from Sept 18 2025 /to Sept 19 2025
 
 
-## Viewing tasks
+## Adding a Deadline Task: deadline
+Adds a task that needs to be completed by a specific date/time.
 
-Viewing the task users have inputed can be done by using the list function. The list function lists out the task that users have added.
-The format of the list function is simply:
+    Format: deadline TASK_DESCRIPTION /by DATE_TIME
 
-    list
+Example:
 
-## Delete/Mark/Unmark task
+    deadline CS2103T iP /by tonight
+    deadline Submit report /by Sep 18 2025 5pm
 
-Users can delete a task or mark a task as completed or unmark as task to be incomplete. 
-The format to mark a task is as follows:
 
-    delete index_number
-    mark index_number
-    unmark index_number
+## Adding an Event Task: event
+Adds a task that occurs over a specific period of time.
 
-Example
+    Format: event TASK_DESCRIPTION /from START_TIME /to END_TIME
 
-    delete 3
-    mark 1
-    unmark 2
+Example:
 
-## Due/Find task
+    event Hackathon /from Sept 18 2025 /to Sept 19 2025
+    event Team meeting /from Mon 2pm /to Mon 4pm
 
-Users can find task by searching for the name of the task. Users can also get tasks that are due on a certain date.
-The format to find a task is:
 
-    find task_name
 
-The format to get due task is:
+## Marking a Task as Done: mark
+Marks the task at the specified index as completed.
 
-    due time
+    Format: mark INDEX
 
-Example of find/due tasks
+Example:
 
+    mark 1 - Marks the first task in the list as done.
+
+## Unmarking a Task: unmark
+Marks the task at the specified index as not completed.
+
+    Format: unmark INDEX
+
+Example:
+
+    unmark 2 - Marks the second task in the list as not done.
+
+## Deleting a Task: delete
+Removes the task at the specified index from the list permanently.
+
+    Format: delete INDEX
+
+Example:
+
+    delete 3 - Deletes the third task in the list.
+
+
+
+## Finding Tasks: find
+Searches for tasks containing the given keyword(s).
+
+Format: find KEYWORD
+
+Example:
+
+    find book - Returns tasks like "Read book" or "Buy textbook"
     find cs2103t ip
 
+## Viewing Due Tasks: due
+Lists all deadlines due on a specific date.
+
+    Format: due DATE
+
+Example:
+
     due Sep 18 2025
+    due today
 

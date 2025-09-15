@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import waguri.storage.Storage;
 import waguri.task.Task;
 import waguri.task.TaskList;
+import waguri.ui.GuiFormatter;
 import waguri.ui.Parser;
 import waguri.ui.Ui;
 
@@ -16,14 +17,24 @@ import waguri.ui.Ui;
  * and shutdown.
  */
 public class Waguri {
-    /** The storage component responsible for saving and loading tasks */
+    /**
+     * The storage component responsible for saving and loading tasks
+     */
     private Storage storage;
-    /** The task list component managing all tasks */
+    /**
+     * The task list component managing all tasks
+     */
     private TaskList tasks;
-    /** The user interface component handling input and output */
+    /**
+     * The user interface component handling input and output
+     */
     private Ui ui;
-    /** The storage component responsible for archive */
+    /**
+     * The storage component responsible for archive
+     */
     private Storage archiveStorage;
+
+    private GuiFormatter guiFormatter;
 
 
     /**
@@ -32,18 +43,12 @@ public class Waguri {
      *
      * @param filePath the file path where tasks will be persisted
      */
-    public Waguri() {
-        this.ui = new Ui();
-        this.storage = new Storage("./data/waguri.txt");
-        this.tasks = new TaskList(storage.loadTasks());
-        this.archiveStorage = new Storage("./data/waguriArchive.txt");
-    }
-
     public Waguri(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.tasks = new TaskList(storage.loadTasks());
         this.archiveStorage = new Storage("./data/waguriArchive.txt");
+        this.guiFormatter = new GuiFormatter(tasks, archiveStorage);
     }
 
     /**
@@ -72,7 +77,7 @@ public class Waguri {
      * Processes a single user command and executes the corresponding action.
      * Handles all supported command types and manages task persistence.
      *
-     * @param command the parsed command type
+     * @param command        the parsed command type
      * @param userExpression the original user input string
      * @return false if the application should exit (BYE command), true otherwise
      * @throws WaguriException if the command is invalid or processing fails
@@ -139,88 +144,26 @@ public class Waguri {
         }
     }
 
-    public static void main(String[] args) {
-        new Waguri("./data/waguri.txt").run();
-    }
-
     public String getResponse(String input) {
         if (input == null || input.trim().isEmpty()) {
             return "Hello? Is anyone there?";
         }
 
         try {
-            String userExpression = input.trim();
-            Parser.Command command = Parser.parseCommand(userExpression);
+            String userInput = input.trim();
+            Parser.Command command = Parser.parseCommand(userInput);
 
-            processCommand(command, userExpression);
+            processCommand(command, userInput);
+            return guiFormatter.generateResponse(command, userInput);
 
-            switch (command) {
-            case BYE:
-                return "🌟Goodbye!";
-
-            case LIST:
-                if (tasks.isEmpty()) {
-                    return "Your list is empty! "
-                            + "What will you achieve today?";
-                } else {
-                    String taskList = tasks.getTasksAsString();
-                    String formattedTasks = taskList.replaceAll("\\[X\\]", "✅");
-
-                    return formattedTasks;
-                }
-
-            case MARK:
-                return "✅ VICTORY! Keep this momentum going! 💪";
-
-            case UNMARK:
-                return "🔄 You've got this!";
-
-            case TODO:
-                return "🎯 Goal set! You're making it happen! ✨";
-
-            case DEADLINE:
-                return "Deadline accepted! Pressure creates diamonds! 💎";
-
-            case EVENT:
-                return "Event Scheduled! ";
-
-            case DELETE:
-                return "Deleted!";
-
-            case DUE:
-                String date = userExpression.substring(3).trim();
-                ArrayList<Task> dueTasks = tasks.getDueTasks(date);
-                return "Your upcoming tasks"
-                        + tasks.formatDueTasks(dueTasks, date);
-
-            case FIND:
-                String findContent = userExpression.substring(5).trim();
-                String[] searchTerms = findContent.split("\\s+");
-                TaskList findTasks = new TaskList(tasks.findTasks(searchTerms));
-                return findTasks.getTasksAsString();
-
-            case ARCHIEVE:
-                String archiveTasks = archiveStorage.getStorageTask();
-                String formattedTasks = archiveTasks.replaceAll("\\[X\\]", "✅");
-
-                if (archiveTasks.isEmpty()) {
-                    return "Your archive is empty!";
-                } else {
-                    return "Your hall of achievements:\n" + formattedTasks
-                            + "\n\nLook how far you've come! 🌟";
-                }
-
-            case UNKNOWN:
-                return "ERROR: I do not understand that command. Try: list, todo, deadline, event, mark, unmark, delete";
-
-            case HELP:
-                return "Available commands are: "
-                        + Parser.getAvailableCommands();
-            default:
-                return "Keep building your future! 🏆";
-            }
         } catch (Exception e) {
             return "ERROR: " + e.getMessage();
         }
     }
+
+    public static void main(String[] args) {
+        new Waguri("./data/waguri.txt").run();
+    }
 }
+
+
