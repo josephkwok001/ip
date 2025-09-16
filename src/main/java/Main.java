@@ -24,7 +24,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setTitle("Waguri - Task Management Assistant");
 
-            stage.setFullScreenExitHint("Press ESC to exit fullscreen"); // Optional hint
+            stage.setFullScreenExitHint("Press ESC to exit fullscreen");
             stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("ESC"));
 
             stage.setScene(scene);

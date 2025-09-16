@@ -71,7 +71,6 @@ public class DateParser {
         if (input.equals("6am")) {
             return now.withHour(6).withMinute(0);
         }
-
         if (input.equals("7am")) {
             return now.withHour(7).withMinute(0);
         }

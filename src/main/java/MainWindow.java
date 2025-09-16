@@ -19,8 +19,6 @@ public class MainWindow extends AnchorPane {
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
     private Waguri waguri;
 
@@ -40,8 +38,8 @@ public class MainWindow extends AnchorPane {
         dialogContainer.setStyle("-fx-background-color: #f7fafc;");
         scrollPane.setStyle("-fx-background: #f7fafc; -fx-border-color: #f7fafc;");
 
-        String welcomeMessage = "👋 Hello! I'm Waguri, your task management assistant!\n" +
-                "✨ Type 'help' to see what I can do for you!";
+        String welcomeMessage = "👋 Hello! I'm Waguri, your task management assistant!\n"
+                + "✨ Type 'help' to see what I can do for you!";
         dialogContainer.getChildren().add(DialogBox.getWaguriDialog(welcomeMessage, waguriImage));
 
     }

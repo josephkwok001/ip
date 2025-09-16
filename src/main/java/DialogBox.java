@@ -39,8 +39,8 @@ public class DialogBox extends HBox {
         dialog.setText(text);
         displayPicture.setImage(img);
 
-        this.setSpacing(5); // Reduced from 10 to 5
-        this.setAlignment(Pos.TOP_RIGHT); // For user messages
+        this.setSpacing(5);
+        this.setAlignment(Pos.TOP_RIGHT);
 
         setLayout();
 
