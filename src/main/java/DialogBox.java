@@ -3,12 +3,9 @@ import java.util.Collections;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
 import javafx.geometry.Pos;
-
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -89,9 +86,9 @@ public class DialogBox extends HBox {
     }
 
     private void applyErrorStyle() {
-        dialog.setStyle("-fx-background-color: #ffebee; " +
-                "-fx-text-fill: #c62828; " +
-                "-fx-border-color: #f44336; " +
+        dialog.setStyle("-fx-background-color: #ffebee; "
+                + "-fx-text-fill: #c62828; "
+                + "-fx-border-color: #f44336; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-radius: 5px; " +
                 "-fx-background-radius: 5px; " +
