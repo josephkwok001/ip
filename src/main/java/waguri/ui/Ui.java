@@ -40,6 +40,12 @@ public class Ui {
         showBorder();
     }
 
+    /**
+     * Displays available commands to the user.
+     * Prints a formatted list of all supported commands retrieved from
+     * the Parser class, providing guidance on application usage.
+     *
+     */
     public void showHelp() {
         System.out.println("Available commands: "
                 + Parser.getAvailableCommands());
