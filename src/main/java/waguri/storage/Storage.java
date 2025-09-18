@@ -117,6 +117,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves a task to the archive file by appending it to existing archived tasks.
+     * Loads all currently archived tasks from the file.
+     *
+     * @param t the Task object to be archived; must not be null
+     */
     public void saveArchive(Task t) {
         ArrayList<Task> archiveList = this.loadTasks();
         try (FileWriter writer = new FileWriter(filePath)) {
