@@ -99,30 +99,30 @@ public class DialogBox extends HBox {
     }
 
     private void applyBotStyle() {
-        dialog.setStyle("-fx-background-color: #374151; " +
-                "-fx-text-fill: #f3f4f6; " +
-                "-fx-border-color: #4b5563; " +
-                "-fx-border-width: 1px; " +
-                "-fx-border-radius: 18px 18px 18px 4px; " +
-                "-fx-background-radius: 18px 18px 18px 4px; " +
-                "-fx-padding: 14px 18px; " +
-                "-fx-font-family: 'Segoe UI', sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-line-spacing: 1.5;");
+        dialog.setStyle("-fx-background-color: #374151; "
+                + "-fx-text-fill: #f3f4f6; "
+                + "-fx-border-color: #4b5563; "
+                + "-fx-border-width: 1px; "
+                + "-fx-border-radius: 18px 18px 18px 4px; "
+                + "-fx-background-radius: 18px 18px 18px 4px; "
+                + "-fx-padding: 14px 18px; "
+                + "-fx-font-family: 'Segoe UI', sans-serif; "
+                + "-fx-font-size: 14px; "
+                + "-fx-line-spacing: 1.5;");
     }
 
     private void applyUserStyle() {
-        dialog.setStyle("-fx-background-color: #6366f1; " +
-                "-fx-text-fill: white; " +
-                "-fx-border-color: #4f46e5; " +
-                "-fx-border-width: 1px; " +
-                "-fx-border-radius: 18px 18px 4px 18px; " +
-                "-fx-background-radius: 18px 18px 4px 18px; " +
-                "-fx-padding: 14px 18px; " +
-                "-fx-font-family: 'Segoe UI', sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-line-spacing: 1.5; " +
-                "-fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.3), 6, 0.2, 0, 2);");
+        dialog.setStyle("-fx-background-color: #6366f1; "
+                + "-fx-text-fill: white; "
+                + "-fx-border-color: #4f46e5; "
+                + "-fx-border-width: 1px; "
+                + "-fx-border-radius: 18px 18px 4px 18px; "
+                + "-fx-background-radius: 18px 18px 4px 18px; "
+                + "-fx-padding: 14px 18px; "
+                + "-fx-font-family: 'Segoe UI', sans-serif; "
+                + "-fx-font-size: 14px; "
+                + "-fx-line-spacing: 1.5; "
+                + "-fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.3), 6, 0.2, 0, 2);");
     }
 
 
