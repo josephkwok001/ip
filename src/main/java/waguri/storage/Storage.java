@@ -226,6 +226,10 @@ public class Storage {
 
     }
 
+    /**
+     * Exception thrown when there is an error parsing task data.
+     * This exception indicates that the task could not be interpreted properly
+     */
     public class TaskParseException extends Exception {
         public TaskParseException(String message) {
             super(message);
