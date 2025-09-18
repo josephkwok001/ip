@@ -3,3 +3,5 @@
 [T][] legs
 [D][] cs2100 presentation (by: 2025 Sep 18)
 [D][] cs2103 ip (by: 2025 Sep 19 23:59)
+[T][] push
+[T][] pull
