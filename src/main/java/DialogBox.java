@@ -88,12 +88,12 @@ public class DialogBox extends HBox {
     private void applyErrorStyle() {
         dialog.setStyle("-fx-background-color: #ffebee; "
                 + "-fx-text-fill: #c62828; "
-                + "-fx-border-color: #f44336; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-radius: 5px; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-padding: 10px; " +
-                "-fx-font-weight: bold;");
+                + "-fx-border-color: #f44336; "
+                + "-fx-border-width: 2px; "
+                + "-fx-border-radius: 5px; "
+                + "-fx-background-radius: 5px; "
+                + "-fx-padding: 10px; "
+                + "-fx-font-weight: bold;");
 
         dialog.setText("⚠️ " + dialog.getText());
     }
