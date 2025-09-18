@@ -22,6 +22,14 @@ public class GuiFormatter {
         this.archiveStorage = archiveStorage;
     }
 
+    /**
+     * Generates a formatted response based on the user's command and input.
+     *
+     * @param command the parsed command from user input
+     * @param userExpression the original user input string
+     * @return a formatted string response for the GUI
+     */
+
     public String generateResponse(Parser.Command command, String userExpression) {
         switch (command) {
         case BYE:
