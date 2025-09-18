@@ -11,6 +11,12 @@ public class GuiFormatter {
     private final TaskList tasks;
     private final Storage archiveStorage;
 
+    /**
+     * Constructs for GuiFormatter
+     *
+     * @param tasks the TaskList containing current tasks
+     * @param archiveStorage the Storage object for archive operations
+     */
     public GuiFormatter(TaskList tasks, Storage archiveStorage) {
         this.tasks = tasks;
         this.archiveStorage = archiveStorage;
