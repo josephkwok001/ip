@@ -1,6 +1,5 @@
 package waguri.ui;
 
-
 import java.util.ArrayList;
 
 import waguri.storage.Storage;
