@@ -220,6 +220,12 @@ public class TaskList {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     * Checks if the list of tasks is empty.
+     *
+     * @return a boolean on whether the task list is empty or not
+     */
+
     public boolean isEmpty() {
         if (tasks.isEmpty()) {
             return true;
