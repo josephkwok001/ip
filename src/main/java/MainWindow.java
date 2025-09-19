@@ -8,9 +8,6 @@ import javafx.scene.layout.VBox;
 
 import waguri.Waguri;
 
-/**
- * Controller for the main GUI.
- */
 public class MainWindow extends AnchorPane {
     @FXML
     private ScrollPane scrollPane;
