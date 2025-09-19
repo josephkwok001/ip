@@ -38,7 +38,6 @@ public class MainWindow extends AnchorPane {
 
     }
 
-    /** Injects the Waguri instance */
     public void setWaguri(Waguri d) {
         waguri = d;
     }
