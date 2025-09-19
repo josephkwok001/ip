@@ -42,10 +42,6 @@ public class MainWindow extends AnchorPane {
         waguri = d;
     }
 
-    /**
-     * Creates two dialog boxes, one echoing user input and the other containing Waguri's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
-     */
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
