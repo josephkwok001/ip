@@ -1,7 +1,17 @@
-# Waguri User Guide
+# To Do List Chat Bot User Guide 
 
 This is a chatbot designed for task management. 
 There are several methods that users can use, which includes: todo, deadline, event, delete, list, mark, unmark, bye, due, find, archieve, help.
+
+
+## Quick Start
+1. Ensure you have Java 17 or above installed
+2. Download the latest `waguri.jar` from the releases page
+3. Run the application: `java -jar waguri.jar`
+4. Type `help` to see all available commands
+
+
+
 
 ## Viewing Help: help
 Shows a list of all available commands.
